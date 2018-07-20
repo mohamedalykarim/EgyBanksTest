@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "481685995604",
+    "firebase_url": "https://egy-baks-test.firebaseio.com",
+    "project_id": "egy-baks-test",
+    "storage_bucket": "egy-baks-test.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:481685995604:android:10b4ace204d5666e",
+        "android_client_info": {
+          "package_name": "mohalim.android.egybankstest"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "481685995604-t9efc3anvacjbqbkelcrnqe38o8qfsq0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD3nBleAGlCWXkSNq-c2w_lCCAkXom4R6s"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

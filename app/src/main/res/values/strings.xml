@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">Egy Banks Test</string>
+    <string name="log_in">Log In</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="enter_your_details">Enter Your Details</string>
+    <string name="welcome_to_our_app">Welcome To Our App</string>
+    <string name="log_out">Log out</string>
+    <string name="welcome_back_to_the_app">Welcome Back To The App</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="name">Name</string>
+    <string name="status_email_empty">The Email Is Empty</string>
+    <string name="status_password_empty">The Password Is Empty</string>
+    <string name="status_confirm_password_empty">The Comfirm Password Input Is Empty</string>
+    <string name="status_name_empty">The Name Is Empty</string>
+    <string name="status_password_not_match">The Password Doesn\'t Match</string>
+    <string name="status_not_email">Not a Correct Email</string>
+    <string name="egypt_banks_test">EGYPT BANKS TEST</string>
+    <string name="you_already_signed_in">You Are Already Logged In</string>
+</resources>
