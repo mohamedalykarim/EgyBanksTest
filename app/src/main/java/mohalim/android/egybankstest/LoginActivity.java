@@ -91,9 +91,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             if (!TextUtils.isEmpty(validateString))
             Toast.makeText(this, ""+validateString, Toast.LENGTH_SHORT).show();
 
-            progressBar.setVisibility(View.VISIBLE);
 
             if (TextUtils.isEmpty(validateString)){
+                progressBar.setVisibility(View.VISIBLE);
+                loginBtn.setEnabled(false);
+
+
                 String email = emailET.getText().toString();
                 String password = passwordET.getText().toString();
 
@@ -107,6 +110,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         }else{
                             Toast.makeText(LoginActivity.this, "Error: Please Type the Correct Credential",
                                     Toast.LENGTH_SHORT).show();
+                            loginBtn.setEnabled(true);
                         }
 
                     }

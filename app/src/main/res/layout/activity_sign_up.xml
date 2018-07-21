@@ -26,7 +26,7 @@
         app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
     <ImageView
-        android:id="@+id/imageView3"
+        android:id="@+id/profile_image"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginEnd="8dp"
@@ -50,7 +50,7 @@
         android:textSize="22sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView3" />
+        app:layout_constraintTop_toBottomOf="@+id/profile_image" />
 
     <TextView
         android:id="@+id/textView4"
@@ -141,6 +141,21 @@
 
 
     </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/signup_progress"
+        style="@style/Widget.AppCompat.ProgressBar"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:visibility="gone"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/login_btn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
 </android.support.constraint.ConstraintLayout>
 

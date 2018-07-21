@@ -41,7 +41,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/login" />
+            app:srcCompat="@drawable/login_menu" />
 
         <View
             android:layout_width="match_parent"
@@ -120,11 +120,11 @@
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/imageView2"
+            app:layout_constraintStart_toEndOf="@+id/profile_image"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
-            android:id="@+id/imageView2"
+            android:id="@+id/profile_image"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginBottom="8dp"

@@ -17,10 +17,12 @@ import mohalim.android.egybankstest.R;
 public class MainMenuRecyclerAdapter extends RecyclerView.Adapter<MainMenuRecyclerAdapter.MainMenuViewHolder> {
     Context mContext;
     ArrayList<MainMenuItem> menuItems;
+    MainMenuClickListener mainMenuClickListener;
 
-    public MainMenuRecyclerAdapter(Context mContext, ArrayList<MainMenuItem> itemArrayAdapter) {
+    public MainMenuRecyclerAdapter(Context mContext, ArrayList<MainMenuItem> itemArrayAdapter, MainMenuClickListener listener) {
         this.mContext = mContext;
         this.menuItems = itemArrayAdapter;
+        this.mainMenuClickListener = listener;
     }
 
     @NonNull
@@ -45,15 +47,17 @@ public class MainMenuRecyclerAdapter extends RecyclerView.Adapter<MainMenuRecycl
         return menuItems.size();
     }
 
-    class MainMenuViewHolder extends RecyclerView.ViewHolder{
+    class MainMenuViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         ImageView iconImage;
         TextView titleTV, subTitleTV;
 
         public MainMenuViewHolder(View itemView) {
             super(itemView);
+            itemView.setOnClickListener(this);
             iconImage = itemView.findViewById(R.id.icon_image_main_menu);
             titleTV = itemView.findViewById(R.id.title_main_menu);
             subTitleTV = itemView.findViewById(R.id.subtitle_main_menu);
+
         }
 
         public void bind(int resource, String title, String subTitle){
@@ -61,5 +65,15 @@ public class MainMenuRecyclerAdapter extends RecyclerView.Adapter<MainMenuRecycl
             titleTV.setText(title);
             subTitleTV.setText(subTitle);
         }
+
+        @Override
+        public void onClick(View v) {
+            int position = getAdapterPosition();
+            mainMenuClickListener.onMenuItemClickListener(position);
+        }
+    }
+
+    public interface MainMenuClickListener{
+        void onMenuItemClickListener(int position);
     }
 }

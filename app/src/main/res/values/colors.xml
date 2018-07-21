@@ -5,6 +5,7 @@
     <color name="colorAccent">#ff8400</color>
     <color name="light_text_color">#dadada</color>
     <color name="line">#1f2f48</color>
+    <color name="transform">#d91e1e1e</color>
 
 
 </resources>

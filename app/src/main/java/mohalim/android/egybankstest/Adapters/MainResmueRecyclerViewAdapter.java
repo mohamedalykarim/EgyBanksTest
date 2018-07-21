@@ -20,9 +20,12 @@ public class MainResmueRecyclerViewAdapter extends RecyclerView.Adapter<MainResm
     Context mContext;
     ArrayList<Resume> resumes;
 
-    public MainResmueRecyclerViewAdapter(Context mContext, ArrayList<Resume> resumes) {
+    final private MainResumeItemClickListener mainRecyclerItemClickListener;
+
+    public MainResmueRecyclerViewAdapter(Context mContext, ArrayList<Resume> resumes, MainResumeItemClickListener listener) {
         this.mContext = mContext;
         this.resumes = resumes;
+        this.mainRecyclerItemClickListener = listener;
     }
 
     @NonNull
@@ -38,11 +41,6 @@ public class MainResmueRecyclerViewAdapter extends RecyclerView.Adapter<MainResm
     public void onBindViewHolder(@NonNull MainResumeViewHolder holder, int position) {
         Resume resume = resumes.get(position);
         Picasso.get().load(resume.getProfileImage()).into(holder.profileImage);
-        holder.profileImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-            }
-        });
     }
 
     @Override
@@ -50,12 +48,25 @@ public class MainResmueRecyclerViewAdapter extends RecyclerView.Adapter<MainResm
         return resumes.size();
     }
 
-    class MainResumeViewHolder extends RecyclerView.ViewHolder{
+    class MainResumeViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         ImageView profileImage;
 
         public MainResumeViewHolder(View itemView) {
             super(itemView);
             profileImage = itemView.findViewById(R.id.profile_image);
+            itemView.setOnClickListener(this);
         }
+
+
+        @Override
+        public void onClick(View v) {
+            int position = getAdapterPosition();
+            mainRecyclerItemClickListener.onResumeItemClickListener(position);
+        }
+    }
+
+
+    public interface MainResumeItemClickListener{
+        void onResumeItemClickListener(int position);
     }
 }

@@ -11,6 +11,7 @@ import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -37,6 +38,8 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
 
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
+
+    ProgressBar signUpProgressBar;
 
 
 
@@ -65,6 +68,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         nameET = findViewById(R.id.et_name);
         signUpBtn = findViewById(R.id.signup_button);
         signUpBtn.setOnClickListener(this);
+        signUpProgressBar = findViewById(R.id.signup_progress);
 
 
         statuses = new ArrayList<>();
@@ -161,10 +165,14 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     @Override
     public void onClick(View v) {
         if (v == signUpBtn){
+
             String validateString = getValidateString();
             if (!TextUtils.isEmpty(validateString))
             Toast.makeText(this, ""+validateString, Toast.LENGTH_SHORT).show();
             if (TextUtils.isEmpty(validateString)){
+                signUpBtn.setEnabled(false);
+                signUpProgressBar.setVisibility(View.VISIBLE);
+
                 String email = emailET.getText().toString();
                 String password = passwordET.getText().toString();
                 final String name = nameET.getText().toString();
@@ -177,50 +185,43 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                         // create user with email and password
                         if (task.isSuccessful()){
                             final FirebaseUser user = mAuth.getCurrentUser();
-                            UserProfileChangeRequest profileUpdate = new UserProfileChangeRequest.Builder()
-                                    .setDisplayName(name)
-                                    .build();
 
-                            user.updateProfile(profileUpdate).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                @Override
-                                public void onComplete(@NonNull Task<Void> task) {
-                                    // update the user name
-                                    if (task.isSuccessful()){
-                                        mDatabase.child("users").child(user.getUid()).setValue(
-                                                new UserProfile("",
-                                                        "",
-                                                        "",
-                                                        "",
-                                                        "",
-                                                        "",
-                                                        "",
-                                                        "",
-                                                        "",
-                                                        "",
-                                                        "",
-                                                        "",
-                                                        "",
-                                                        "")
-                                        )
-                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                            @Override
-                                            public void onComplete(@NonNull Task<Void> task) {
-                                                //add user profile to database
-                                                if (task.isSuccessful()){
-                                                    finish();
-                                                }else {
-                                                    Toast.makeText(SignUpActivity.this, ""+task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                                                }
+                            mDatabase.child("users").child(user.getUid()).setValue(
+                                    new UserProfile(
+                                            name,
+                                            "",
+                                            "",
+                                            "",
+                                            "",
+                                            "",
+                                            "",
+                                            "",
+                                            "",
+                                            "",
+                                            "",
+                                            "",
+                                            "",
+                                            "",
+                                            "")
+                            )
+                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            //add user profile to database
+                                            if (task.isSuccessful()){
+                                                finish();
+                                            }else {
+                                                Toast.makeText(SignUpActivity.this, ""+task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                                signUpProgressBar.setVisibility(View.GONE);
+                                                signUpBtn.setEnabled(true);
                                             }
-                                        });
-                                    }else {
-                                        Toast.makeText(SignUpActivity.this, ""+task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                                    }
-                                }
-                            });
+                                        }
+                                    });
 
                         }else {
                             Toast.makeText(SignUpActivity.this, ""+task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                            signUpProgressBar.setVisibility(View.GONE);
+                            signUpBtn.setEnabled(true);
                         }
 
                     }

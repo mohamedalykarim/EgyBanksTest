@@ -1,12 +1,17 @@
 package mohalim.android.egybankstest.Models;
 
 public class UserProfile {
-    String aboutMe, experience, education, skills,
+    String name,profileImage,aboutMe, experience, education, skills,
            certifications, courses, langauge, birthdate,
-           nationality, phone, mobile, email, location,
+           nationality, phone, mobile, location,
            extraInfo;
 
-    public UserProfile(String aboutMe, String experience, String education, String skills, String certifications, String courses, String langauge, String birthdate, String nationality, String phone, String mobile, String email, String location, String extraInfo) {
+    public UserProfile() {
+    }
+
+    public UserProfile(String name, String profileImage, String aboutMe, String experience, String education, String skills, String certifications, String courses, String langauge, String birthdate, String nationality, String phone, String mobile, String location, String extraInfo) {
+        this.name = name;
+        this.profileImage = profileImage;
         this.aboutMe = aboutMe;
         this.experience = experience;
         this.education = education;
@@ -18,9 +23,24 @@ public class UserProfile {
         this.nationality = nationality;
         this.phone = phone;
         this.mobile = mobile;
-        this.email = email;
         this.location = location;
         this.extraInfo = extraInfo;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getProfileImage() {
+        return profileImage;
+    }
+
+    public void setProfileImage(String profileImage) {
+        this.profileImage = profileImage;
     }
 
     public String getAboutMe() {
@@ -111,13 +131,6 @@ public class UserProfile {
         this.mobile = mobile;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
 
     public String getLocation() {
         return location;
