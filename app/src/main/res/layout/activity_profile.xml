@@ -31,7 +31,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/profile_image"
             android:layout_width="130dp"
             android:layout_height="130dp"
@@ -41,6 +41,8 @@
             android:contentDescription="TODO"
             android:onClick="updateImageProfile"
             android:scaleType="centerCrop"
+            app:civ_border_width="2dp"
+            app:civ_border_color="@color/light_text_color"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -54,7 +56,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="50dp"
             android:visibility="gone"
-            android:background="@color/transform"
+            android:background="@drawable/circle_shape"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" >

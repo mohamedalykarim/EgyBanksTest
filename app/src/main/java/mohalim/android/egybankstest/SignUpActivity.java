@@ -173,7 +173,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                 signUpBtn.setEnabled(false);
                 signUpProgressBar.setVisibility(View.VISIBLE);
 
-                String email = emailET.getText().toString();
+                final String email = emailET.getText().toString();
                 String password = passwordET.getText().toString();
                 final String name = nameET.getText().toString();
 
@@ -190,6 +190,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                                     new UserProfile(
                                             name,
                                             "",
+                                            email,
                                             "",
                                             "",
                                             "",
@@ -202,7 +203,8 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                                             "",
                                             "",
                                             "",
-                                            "")
+                                            "",
+                                            0)
                             )
                                     .addOnCompleteListener(new OnCompleteListener<Void>() {
                                         @Override

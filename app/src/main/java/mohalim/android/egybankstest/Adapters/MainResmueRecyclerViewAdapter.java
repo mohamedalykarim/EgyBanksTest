@@ -3,6 +3,7 @@ package mohalim.android.egybankstest.Adapters;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,16 +14,16 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-import mohalim.android.egybankstest.Models.Resume;
+import mohalim.android.egybankstest.Models.UserProfile;
 import mohalim.android.egybankstest.R;
 
 public class MainResmueRecyclerViewAdapter extends RecyclerView.Adapter<MainResmueRecyclerViewAdapter.MainResumeViewHolder> {
     Context mContext;
-    ArrayList<Resume> resumes;
+    ArrayList<UserProfile> resumes;
 
     final private MainResumeItemClickListener mainRecyclerItemClickListener;
 
-    public MainResmueRecyclerViewAdapter(Context mContext, ArrayList<Resume> resumes, MainResumeItemClickListener listener) {
+    public MainResmueRecyclerViewAdapter(Context mContext, ArrayList<UserProfile> resumes, MainResumeItemClickListener listener) {
         this.mContext = mContext;
         this.resumes = resumes;
         this.mainRecyclerItemClickListener = listener;
@@ -39,8 +40,12 @@ public class MainResmueRecyclerViewAdapter extends RecyclerView.Adapter<MainResm
 
     @Override
     public void onBindViewHolder(@NonNull MainResumeViewHolder holder, int position) {
-        Resume resume = resumes.get(position);
-        Picasso.get().load(resume.getProfileImage()).into(holder.profileImage);
+        UserProfile resume = resumes.get(position);
+        if (!TextUtils.isEmpty(resume.getProfileImage())){
+            Picasso.get().load(resume.getProfileImage()).into(holder.profileImage);
+        }else{
+            Picasso.get().load(R.drawable.default_profile).into(holder.profileImage);
+        }
     }
 
     @Override

@@ -39,7 +39,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/username_tv" />
 
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/profile_image"
             android:layout_width="150dp"
             android:layout_height="150dp"
@@ -49,6 +49,9 @@
             android:layout_marginTop="8dp"
             android:scaleType="centerCrop"
             android:src="@drawable/default_profile"
+            android:elevation="@dimen/image_elevation"
+            app:civ_border_width="2dp"
+            app:civ_border_color="@color/light_text_color"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

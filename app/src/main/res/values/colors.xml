@@ -4,8 +4,12 @@
     <color name="colorPrimaryDark">#101926</color>
     <color name="colorAccent">#ff8400</color>
     <color name="light_text_color">#dadada</color>
+    <color name="light_text_color_gray">#9e9e9e</color>
     <color name="line">#1f2f48</color>
+    <color name="body_text_color">#113978</color>
     <color name="transform">#d91e1e1e</color>
+    <color name="white">#ffffff</color>
+
 
 
 </resources>

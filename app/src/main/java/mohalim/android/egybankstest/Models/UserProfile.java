@@ -1,17 +1,22 @@
 package mohalim.android.egybankstest.Models;
 
-public class UserProfile {
-    String name,profileImage,aboutMe, experience, education, skills,
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class UserProfile implements Parcelable {
+    String name,profileImage, email, aboutMe, experience, education, skills,
            certifications, courses, langauge, birthdate,
            nationality, phone, mobile, location,
            extraInfo;
+    int points;
 
     public UserProfile() {
     }
 
-    public UserProfile(String name, String profileImage, String aboutMe, String experience, String education, String skills, String certifications, String courses, String langauge, String birthdate, String nationality, String phone, String mobile, String location, String extraInfo) {
+    public UserProfile(String name, String profileImage, String email, String aboutMe, String experience, String education, String skills, String certifications, String courses, String langauge, String birthdate, String nationality, String phone, String mobile, String location, String extraInfo, int points) {
         this.name = name;
         this.profileImage = profileImage;
+        this.email = email;
         this.aboutMe = aboutMe;
         this.experience = experience;
         this.education = education;
@@ -25,7 +30,66 @@ public class UserProfile {
         this.mobile = mobile;
         this.location = location;
         this.extraInfo = extraInfo;
+        this.points = points;
     }
+
+    protected UserProfile(Parcel in) {
+        name = in.readString();
+        profileImage = in.readString();
+        email = in.readString();
+        aboutMe = in.readString();
+        experience = in.readString();
+        education = in.readString();
+        skills = in.readString();
+        certifications = in.readString();
+        courses = in.readString();
+        langauge = in.readString();
+        birthdate = in.readString();
+        nationality = in.readString();
+        phone = in.readString();
+        mobile = in.readString();
+        location = in.readString();
+        extraInfo = in.readString();
+        points = in.readInt();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(name);
+        dest.writeString(profileImage);
+        dest.writeString(email);
+        dest.writeString(aboutMe);
+        dest.writeString(experience);
+        dest.writeString(education);
+        dest.writeString(skills);
+        dest.writeString(certifications);
+        dest.writeString(courses);
+        dest.writeString(langauge);
+        dest.writeString(birthdate);
+        dest.writeString(nationality);
+        dest.writeString(phone);
+        dest.writeString(mobile);
+        dest.writeString(location);
+        dest.writeString(extraInfo);
+        dest.writeInt(points);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<UserProfile> CREATOR = new Creator<UserProfile>() {
+        @Override
+        public UserProfile createFromParcel(Parcel in) {
+            return new UserProfile(in);
+        }
+
+        @Override
+        public UserProfile[] newArray(int size) {
+            return new UserProfile[size];
+        }
+    };
 
     public String getName() {
         return name;
@@ -41,6 +105,14 @@ public class UserProfile {
 
     public void setProfileImage(String profileImage) {
         this.profileImage = profileImage;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getAboutMe() {
@@ -146,5 +218,13 @@ public class UserProfile {
 
     public void setExtraInfo(String extraInfo) {
         this.extraInfo = extraInfo;
+    }
+
+    public int getPoints() {
+        return points;
+    }
+
+    public void setPoints(int points) {
+        this.points = points;
     }
 }

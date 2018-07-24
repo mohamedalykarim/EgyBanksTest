@@ -49,4 +49,7 @@
     <string name="more_info">More Information</string>
     <string name="make_it_perfect">Make It Perfect</string>
     <string name="update_your_profile_and_details">Update Your Profile And Details</string>
+    <string name="personal_title">Personal:</string>
+    <string name="contact_title">Contact:</string>
+    <string name="email_title">Email:</string>
 </resources>

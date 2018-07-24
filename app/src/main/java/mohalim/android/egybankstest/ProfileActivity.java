@@ -1,7 +1,9 @@
 package mohalim.android.egybankstest;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
@@ -29,10 +31,12 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
+import java.io.IOException;
 import java.sql.Time;
 
 import mohalim.android.egybankstest.Fragments.DatePickerFragment;
 import mohalim.android.egybankstest.Models.UserProfile;
+import mohalim.android.egybankstest.Utils.ImageUtils;
 
 public class ProfileActivity extends AppCompatActivity {
     private static final int REQUEST_CODE = 125;
@@ -189,71 +193,55 @@ public class ProfileActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == REQUEST_CODE && resultCode == RESULT_OK){
             Uri uri= data.getData();
+            try {
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
+                byte[] imageData = ImageUtils.getByteFromBitmap(bitmap,100);
 
-            final StorageReference filepath = storage.getReference("Egy_Banks_App").child("profile").child(user.getUid()+ uri.getLastPathSegment());
-            filepath.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    // On Uploading Image URL
-                    filepath.getDownloadUrl()
-                            .addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                @Override
-                                public void onSuccess(final Uri newUri) {
+                final StorageReference filepath = storage.getReference("Egy_Banks_App").child("profile").child(user.getUid());
 
+                filepath.putBytes(imageData).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        // On Uploading Image URL
+                        filepath.getDownloadUrl()
+                                .addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                    @Override
+                                    public void onSuccess(final Uri newUri) {
 
+                                        // On Getting Uploaded Image URL
 
-                                    // On Getting Uploaded Image URL
-                                    if (!TextUtils.isEmpty(userProfile.getProfileImage())){
+                                        Picasso.get().load(newUri)
+                                                .placeholder(getResources().getDrawable(R.drawable.default_profile))
+                                                .into(profileImage);
 
-                                        Uri previousUri = Uri.parse(userProfile.getProfileImage());
-
-                                        final StorageReference toDeletePath = storage.getReference("Egy_Banks_App")
-                                                .child("profile")
-                                                .child(previousUri.getLastPathSegment().substring(22,previousUri.getLastPathSegment().length()));
-
-
-
-                                        toDeletePath.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
-                                            @Override
-                                            public void onSuccess(Void aVoid) {
-                                                // After Deleting Previous Image;
-                                                Picasso.get().load(newUri).into(profileImage);
-                                                userReference.child("profileImage").setValue(newUri.toString());
-                                                updateProfileImageLoading.setVisibility(View.GONE);
-                                            }
-                                        }).addOnFailureListener(new OnFailureListener() {
-                                            @Override
-                                            public void onFailure(@NonNull Exception e) {
-                                                updateProfileImageLoading.setVisibility(View.GONE);
-                                            }
-                                        });
-
-                                    }else {
-                                        Picasso.get().load(newUri).into(profileImage);
-                                        userReference.child("profileImage").setValue(newUri.toString());
                                         updateProfileImageLoading.setVisibility(View.GONE);
+                                        userReference.child("profileImage").setValue(newUri.toString());
+
 
                                     }
+                                }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                filepath.delete();
+                                updateProfileImageLoading.setVisibility(View.GONE);
+                            }
+                        });
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(ProfileActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                        updateProfileImageLoading.setVisibility(View.GONE);
+                    }
+                });
+
+            } catch (IOException e) {
+                Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
+
+            }
 
 
 
-
-                                }
-                            }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            filepath.delete();
-                            updateProfileImageLoading.setVisibility(View.GONE);
-                        }
-                    });
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    Toast.makeText(ProfileActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-                    updateProfileImageLoading.setVisibility(View.GONE);
-                }
-            });
         }else {
             updateProfileImageLoading.setVisibility(View.GONE);
         }

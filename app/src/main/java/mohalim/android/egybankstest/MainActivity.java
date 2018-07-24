@@ -2,8 +2,6 @@ package mohalim.android.egybankstest;
 
 import android.content.Intent;
 import android.net.Uri;
-import android.opengl.Visibility;
-import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.NavigationView;
@@ -16,8 +14,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -39,18 +35,18 @@ import java.util.ArrayList;
 import mohalim.android.egybankstest.Adapters.MainMenuRecyclerAdapter;
 import mohalim.android.egybankstest.Adapters.MainResmueRecyclerViewAdapter;
 import mohalim.android.egybankstest.Models.MainMenuItem;
-import mohalim.android.egybankstest.Models.Resume;
 import mohalim.android.egybankstest.Models.UserProfile;
 
 public class MainActivity extends AppCompatActivity
         implements MainResmueRecyclerViewAdapter.MainResumeItemClickListener,
                    MainMenuRecyclerAdapter.MainMenuClickListener{
 
+    private static final String RESUMES_EXTRA = "extra_resume";
     RecyclerView resumeRecycler, mainMenuRecycler;
     LinearLayoutManager resumeLayoutManager, mainMenuLayoutManager;
     MainResmueRecyclerViewAdapter mainResmueRecyclerViewAdapter;
     MainMenuRecyclerAdapter mainMenuRecyclerAdapter;
-    ArrayList<Resume> resumes;
+    ArrayList<UserProfile> resumes;
     ArrayList<MainMenuItem> menuItems;
 
     NavigationView navigationView;
@@ -58,6 +54,7 @@ public class MainActivity extends AppCompatActivity
 
     FirebaseAuth mAuth;
     FirebaseUser user;
+    Query resumeQuery;
 
     ConstraintLayout menuLoginContainer, menuSignUpContainer, menuLogoutContainer;
     TextView usernameTV, aboutmeTV;
@@ -116,9 +113,6 @@ public class MainActivity extends AppCompatActivity
 
 
 
-
-
-
         mAuth = FirebaseAuth.getInstance();
         user = mAuth.getCurrentUser();
 
@@ -141,7 +135,7 @@ public class MainActivity extends AppCompatActivity
 
 
         /**
-         * Handle Resume Recycler View
+         * Handle ResumeActivity Recycler View
          */
 
         resumeRecycler = findViewById(R.id.resume_recycler_view);
@@ -152,17 +146,13 @@ public class MainActivity extends AppCompatActivity
         resumeRecycler.setLayoutManager(resumeLayoutManager);
         resumeRecycler.setAdapter(mainResmueRecyclerViewAdapter);
 
-        resumes.add(new Resume("http://mhalabs.org/wp-content/uploads/upme/1451456913_brodie.jpg"));
-        resumes.add(new Resume("http://www.attractivepartners.co.uk/wp-content/uploads/2017/06/profile.jpg"));
-        resumes.add(new Resume("https://i.dailymail.co.uk/i/pix/2017/04/20/13/3F6B966D00000578-4428630-image-m-80_1492690622006.jpg"));
-        resumes.add(new Resume("https://static.makeuseof.com/wp-content/uploads/2015/11/perfect-profile-picture-all-about-face.jpg"));
-        resumes.add(new Resume("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTapbRG10GtdPYt7x9l2KywU8yr80Os7uLCcYfU3hzpDkYFmYiqcA"));
-        resumes.add(new Resume("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTDWzGmDHQFB5vv8iB9uKYplW4mY4AZXsZVXrBpRFMogfpPiruWuw"));
+        getResumes();
 
-        mainResmueRecyclerViewAdapter.notifyDataSetChanged();
+
+
 
         /**
-         * Handle Resume Recycler View
+         * Handle ResumeActivity Recycler View
          */
         mainMenuRecycler = findViewById(R.id.main_menu_recycler);
         mainMenuLayoutManager = new LinearLayoutManager(this);
@@ -173,7 +163,7 @@ public class MainActivity extends AppCompatActivity
 
         menuItems.add(new MainMenuItem(R.drawable.alahly,"Alahly Test Bank", "You can simulate Al ahly Bank Test Here"));
         menuItems.add(new MainMenuItem(R.drawable.alahly,"BanqueMisr Test Bank", "You can simulate Al ahly Bank Test Here"));
-        menuItems.add(new MainMenuItem(R.drawable.alahly,"Resume", "You can add and modify you resume here"));
+        menuItems.add(new MainMenuItem(R.drawable.alahly,"ResumeActivity", "You can add and modify you resume here"));
 
 
         if(mAuth.getCurrentUser() != null)
@@ -195,6 +185,29 @@ public class MainActivity extends AppCompatActivity
 
         }
 
+    }
+
+    public void getResumes() {
+        resumeQuery = FirebaseDatabase.getInstance().getReference().child("users").orderByChild("name");
+        resumeQuery.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                resumes.clear();
+
+                for (DataSnapshot data : dataSnapshot.getChildren()){
+                    UserProfile userProfile = data.getValue(UserProfile.class);
+                    resumes.add(userProfile);
+                    mainResmueRecyclerViewAdapter.notifyDataSetChanged();
+
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toast.makeText(MainActivity.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     public void getUserData(){
@@ -234,6 +247,7 @@ public class MainActivity extends AppCompatActivity
     protected void onResume() {
         super.onResume();
         handleMenuVisiblity();
+        getResumes();
 
         if(mAuth.getCurrentUser() != null)
             getUserData();
@@ -265,7 +279,10 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onResumeItemClickListener(int position) {
-        Toast.makeText(this, "", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(MainActivity.this,ResumeActivity.class);
+        UserProfile resume = resumes.get(position);
+        intent.putExtra(RESUMES_EXTRA, resume);
+        startActivity(intent);
     }
 
 
