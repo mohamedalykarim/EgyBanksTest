@@ -1,7 +1,11 @@
 package mohalim.android.egybankstest.Adapters;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.support.annotation.NonNull;
+import android.support.v7.graphics.Palette;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -64,6 +68,15 @@ public class MainMenuRecyclerAdapter extends RecyclerView.Adapter<MainMenuRecycl
             iconImage.setImageResource(resource);
             titleTV.setText(title);
             subTitleTV.setText(subTitle);
+
+            Bitmap bitmap = ((BitmapDrawable)iconImage.getDrawable()).getBitmap();
+            Palette palette =  Palette.from(bitmap).generate();
+
+            int titleColor = palette.getMutedColor(Color.GRAY);
+            int subtitleColor = palette.getLightMutedColor(Color.LTGRAY);
+
+            titleTV.setTextColor(titleColor);
+            subTitleTV.setTextColor(subtitleColor);
         }
 
         @Override

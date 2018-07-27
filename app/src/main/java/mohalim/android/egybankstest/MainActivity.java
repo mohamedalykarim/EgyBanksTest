@@ -105,6 +105,7 @@ public class MainActivity extends AppCompatActivity
                 mAuth.signOut();
                 handleMenuVisiblity();
                 usernameTV.setText(getResources().getString(R.string.welcome_guest));
+                profileImageView.setImageDrawable(getResources().getDrawable(R.drawable.default_profile));
 
             }
         });
@@ -161,9 +162,9 @@ public class MainActivity extends AppCompatActivity
         mainMenuRecycler.setLayoutManager(mainMenuLayoutManager);
         mainMenuRecycler.setAdapter(mainMenuRecyclerAdapter);
 
-        menuItems.add(new MainMenuItem(R.drawable.alahly,"Alahly Test Bank", "You can simulate Al ahly Bank Test Here"));
-        menuItems.add(new MainMenuItem(R.drawable.alahly,"BanqueMisr Test Bank", "You can simulate Al ahly Bank Test Here"));
-        menuItems.add(new MainMenuItem(R.drawable.alahly,"ResumeActivity", "You can add and modify you resume here"));
+        menuItems.add(new MainMenuItem(R.drawable.alahly,"Alahly Test Bank", "You Can Simulate Al ahly Bank Test Here"));
+        menuItems.add(new MainMenuItem(R.drawable.banquemisr ,"BanqueMisr Test Bank", "You Can Simulate Al ahly Bank Test Here"));
+        menuItems.add(new MainMenuItem(R.drawable.profile,"My Profile", "You Can Add And Modify Your Resume Here"));
 
 
         if(mAuth.getCurrentUser() != null)

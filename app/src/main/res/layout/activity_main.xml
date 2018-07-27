@@ -9,17 +9,6 @@
     android:background="@color/colorPrimary">
 
 
-
-
-
-
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scaleType="centerCrop"
-        android:src="@drawable/background"
-        android:contentDescription="TODO" />
-
     <FrameLayout
         android:id="@+id/content_frame"
         android:layout_width="match_parent"
@@ -46,12 +35,12 @@
     </FrameLayout>
 
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <FrameLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/main_grediant"
-        android:orientation="vertical"
         android:layout_marginTop="?attr/actionBarSize"
+        android:orientation="vertical"
 
         >
 
@@ -59,8 +48,7 @@
         <android.support.v7.widget.RecyclerView
             android:id="@+id/main_menu_recycler"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight=".20">
+            android:layout_height="match_parent">
 
         </android.support.v7.widget.RecyclerView>
 
@@ -68,14 +56,14 @@
         <android.support.v7.widget.RecyclerView
             android:id="@+id/resume_recycler_view"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight=".80"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
             android:elevation="8dp">
 
         </android.support.v7.widget.RecyclerView>
 
 
-    </LinearLayout>
+    </FrameLayout>
 
 
 

@@ -37,7 +37,7 @@ public class ResumeActivity extends AppCompatActivity {
 
 
     ImageView profileImage, backgroundProfile;
-    View transparent, aboutMeLine, educationLine, experienceLine,
+    View primaryLine, transparent, aboutMeLine, educationLine, experienceLine,
             certificationsLine, coursesLine, skillsLine, moreInfoLine;
 
     private static final String RESUMES_EXTRA = "extra_resume";
@@ -76,6 +76,7 @@ public class ResumeActivity extends AppCompatActivity {
         moreInfoTitle = findViewById(R.id.more_info_title_tv);
 
 
+        primaryLine = findViewById(R.id.view_primary);
         aboutMeLine = findViewById(R.id.view_aboutme);
         educationLine = findViewById(R.id.view_education);
         experienceLine = findViewById(R.id.view_experience);
@@ -159,7 +160,8 @@ public class ResumeActivity extends AppCompatActivity {
     }
 
     public void  setColors(int titleColor, int subTitleColor){
-                primaryNameTV.setTextColor(titleColor);
+                primaryNameTV.setTextColor(subTitleColor);
+
                 aboutMeTV.setTextColor(titleColor);
                 educationTV.setTextColor(titleColor);
                 experienceTV.setTextColor(titleColor);
@@ -168,6 +170,7 @@ public class ResumeActivity extends AppCompatActivity {
                 skillsTV.setTextColor(titleColor);
                 moreInfoTV.setTextColor(titleColor);
 
+        primaryLine.setBackgroundColor(subTitleColor);
         aboutMeLine.setBackgroundColor(subTitleColor);
         educationLine.setBackgroundColor(subTitleColor);
         experienceLine.setBackgroundColor(subTitleColor);

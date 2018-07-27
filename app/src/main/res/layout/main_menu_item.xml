@@ -18,7 +18,6 @@
         android:layout_marginTop="8dp"
         android:elevation="@dimen/image_elevation"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/imageView"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
