@@ -6,4 +6,13 @@
     android:layout_height="match_parent"
     tools:context=".AlAhlyActivity">
 
+    <FrameLayout
+        android:id="@+id/alahly_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorPrimary"
+        >
+
+    </FrameLayout>
+
 </android.support.constraint.ConstraintLayout>

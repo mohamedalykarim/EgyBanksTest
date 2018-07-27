@@ -24,7 +24,12 @@
         <activity android:name=".BanqueMisrActivity" />
         <activity android:name=".ProfileActivity" />
         <activity android:name=".ResumeActivity" />
-        <activity android:name=".QuizActivity"></activity>
+        <activity android:name=".QuizActivity"/>
+        <provider
+            android:authorities="mohalim.android.egybankstest"
+            android:name="mohalim.android.egybankstest.Database.AppContentProvider"
+            android:exported="false" />
+
     </application>
 
 </manifest>
