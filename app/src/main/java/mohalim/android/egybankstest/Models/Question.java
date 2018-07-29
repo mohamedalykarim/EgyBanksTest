@@ -4,15 +4,17 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 public class Question implements Parcelable{
     String question_type, question_category, question_text;
-    Object choices;
+    HashMap<String, HashMap<String,Object>> choices;
 
     public Question() {
     }
 
-    public Question(String question_type, String question_category, String question_text, Object choices) {
+    public Question(String question_type, String question_category, String question_text, HashMap<String, HashMap<String, Object>> choices) {
         this.question_type = question_type;
         this.question_category = question_category;
         this.question_text = question_text;
@@ -73,11 +75,11 @@ public class Question implements Parcelable{
         this.question_text = question_text;
     }
 
-    public Object getChoices() {
+    public HashMap<String, HashMap<String, Object>> getChoices() {
         return choices;
     }
 
-    public void setChoices(Object choices) {
+    public void setChoices(HashMap<String, HashMap<String, Object>> choices) {
         this.choices = choices;
     }
 }

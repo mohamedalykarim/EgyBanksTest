@@ -26,6 +26,7 @@ public class SubpageFragment extends Fragment implements MainMenuRecyclerAdapter
 
     private static final String ALAHLY_MENU = "alahly menu";
     private static final String BANQUEMISR_MENU = "banquemisr_menu";
+
     private static final String SELECTED_QUIZ = "selected_quiz";
     private static final String IQ_ALAHLY = "iq_alahly";
     private static final String ENGLISH_ALAHLY = "english_alahly";
