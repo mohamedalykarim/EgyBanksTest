@@ -3,44 +3,90 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:padding="3dp"
+    >
+
+    <android.support.design.widget.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical|end"
+        android:layout_marginTop="6dp"
+        app:fabSize="mini"
+        app:layout_anchor="@id/app_bar"
+        app:layout_anchorGravity="bottom|end"
+        android:layout_marginEnd="8dp"
+        android:src="@drawable/end_session_icon"
+        />
 
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:background="@color/colorPrimaryDark"
+        >
 
+
+        <RadioGroup
+            android:id="@+id/choices_radio"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            >
+
+
+
+        </RadioGroup>
 
 
     </android.support.v4.widget.NestedScrollView>
 
     <android.support.design.widget.AppBarLayout
+        android:id="@+id/app_bar"
         android:layout_height="wrap_content"
-        android:layout_width="match_parent">
+        android:layout_width="match_parent"
+
+        >
 
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimaryDark"
+            app:layout_scrollFlags="scroll|enterAlwaysCollapsed"
+            >
             <ImageView
-                android:id="@+id/quiz_header"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:scaleType="centerCrop" />
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:scaleType="centerCrop"
+                android:padding="10dp"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/career"/>
+
+
+        </FrameLayout>
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/tool_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:padding="10dp"
+            app:layout_collapseMode="pin">
 
             <TextView
                 android:id="@+id/m"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-
+                android:textColor="@color/light_text_color"
+                android:textSize="18sp"
+                android:padding="10dp"
+                android:textAlignment="center"
                 />
 
-        </FrameLayout>
 
-        <android.support.v7.widget.Toolbar
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-        app:layout_scrollFlags="scroll|enterAlways"/>
+
+        </android.support.v7.widget.Toolbar>
 
 
 

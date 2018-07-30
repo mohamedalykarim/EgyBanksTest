@@ -2,14 +2,15 @@ package mohalim.android.egybankstest.Models;
 
 public class Choice {
     String choiceText;
-    boolean isCoorect;
+    int isCorrect;
 
     public Choice() {
     }
 
-    public Choice(String choiceText, boolean isCoorect) {
+
+    public Choice(String choiceText, int isCorrect) {
         this.choiceText = choiceText;
-        this.isCoorect = isCoorect;
+        this.isCorrect = isCorrect;
     }
 
     public String getChoiceText() {
@@ -20,11 +21,11 @@ public class Choice {
         this.choiceText = choiceText;
     }
 
-    public boolean isCoorect() {
-        return isCoorect;
+    public int isCorrect() {
+        return isCorrect;
     }
 
-    public void setCoorect(boolean coorect) {
-        isCoorect = coorect;
+    public void setCorrect(int correct) {
+        isCorrect = correct;
     }
 }

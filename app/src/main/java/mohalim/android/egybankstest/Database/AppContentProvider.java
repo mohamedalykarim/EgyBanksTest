@@ -17,6 +17,10 @@ public class AppContentProvider extends ContentProvider {
     private AppSQLiteHelper appSQLiteHelper;
 
     public static final int QUESTIONS = 100;
+    public static final int QUESTIONS_WITH_SESSION_ID = 101;
+    public static final int QUESTION_ANSWER_CHOSEN = 102;
+    public static final int QUESTION_BY_ID = 103;
+
 
 
     public static final int CHOICES = 200;
@@ -24,6 +28,7 @@ public class AppContentProvider extends ContentProvider {
 
     public static final int SESSION = 300;
     public static final int SESSION_FOR_CATEGORY = 301;
+
 
 
     private static final UriMatcher myUriMatcher = buildUriMatcher();
@@ -87,6 +92,42 @@ public class AppContentProvider extends ContentProvider {
                         null,
                         sortOrder
                 );
+                break;
+
+            case QUESTIONS_WITH_SESSION_ID:
+                String sessionId = uri.getPathSegments().get(2);
+                String questionsSelection = AppContract.QuestionsEntry.COLUMN_SESSION_ID + "=?";
+                String[] questionSelectionArgs = new String[]{sessionId};
+
+
+                returnCursor = db.query(
+                        AppContract.QuestionsEntry.TABLE_NAME,
+                        projection,
+                        questionsSelection,
+                        questionSelectionArgs,
+                        null,
+                        null,
+                        sortOrder
+                );
+                break;
+
+
+            case QUESTION_BY_ID:
+                String questionIdUri = uri.getPathSegments().get(1);
+                String questionsIdSelection = AppContract.QuestionsEntry._ID + "=?";
+                String[] questionIdSelectionArgs = new String[]{questionIdUri};
+
+                returnCursor = db.query(
+                        AppContract.QuestionsEntry.TABLE_NAME,
+                        projection,
+                        questionsIdSelection,
+                        questionIdSelectionArgs,
+                        null,
+                        null,
+                        sortOrder
+                );
+
+
                 break;
 
             case CHOICES:
@@ -156,7 +197,18 @@ public class AppContentProvider extends ContentProvider {
             case QUESTIONS:
                 long questionId = db.insert(AppContract.QuestionsEntry.TABLE_NAME, null, values);
                 if (questionId > 0){
-                    returnUri = ContentUris.withAppendedId(AppContract.SessionEntry.CONTENT_URI,questionId);
+                    returnUri = ContentUris.withAppendedId(AppContract.QuestionsEntry.CONTENT_URI,questionId);
+                }else{
+                    throw new SQLException("Error: Failed to insert row "+ uri);
+                }
+                break;
+
+
+
+            case CHOICES:
+                long choiceId = db.insert(AppContract.ChoiceEntry.TABLE_NAME, null, values);
+                if (choiceId > 0){
+                    returnUri = ContentUris.withAppendedId(AppContract.ChoiceEntry.CONTENT_URI,choiceId);
                 }else{
                     throw new SQLException("Error: Failed to insert row "+ uri);
                 }
@@ -171,41 +223,6 @@ public class AppContentProvider extends ContentProvider {
         return returnUri;
     }
 
-    @Override
-    public int bulkInsert(@NonNull Uri uri, @NonNull ContentValues[] values) {
-        final SQLiteDatabase db = appSQLiteHelper.getWritableDatabase();
-        int match = myUriMatcher.match(uri);
-        int rowsinserted = 0;
-
-        switch (match){
-
-            case CHOICES:
-                db.beginTransaction();
-
-                try{
-                    for (ContentValues contentValues : values){
-                        long _id  = db.insert(AppContract.ChoiceEntry.TABLE_NAME,null,contentValues);
-                        if (_id != -1){
-                            rowsinserted++;
-                        }
-                    }
-                    db.setTransactionSuccessful();
-                }finally {
-                    db.endTransaction();
-                }
-
-                break;
-
-            default:
-                super.bulkInsert(uri,values);
-
-        }
-
-        if (rowsinserted > 0){
-            getContext().getContentResolver().notifyChange(uri,null);
-        }
-        return rowsinserted;
-    }
 
     @Override
     public int delete(@NonNull Uri uri, @Nullable String selection, @Nullable String[] selectionArgs) {
@@ -254,16 +271,49 @@ public class AppContentProvider extends ContentProvider {
 
     @Override
     public int update(@NonNull Uri uri, @Nullable ContentValues values, @Nullable String selection, @Nullable String[] selectionArgs) {
-        return 0;
+        final SQLiteDatabase db = appSQLiteHelper.getWritableDatabase();
+        int match = myUriMatcher.match(uri);
+
+        String[] whereArgs = new String[]{uri.getPathSegments().get(2)};
+        int returnValue;
+        switch (match){
+            case QUESTION_ANSWER_CHOSEN:
+
+                String whereClause = AppContract.QuestionsEntry._ID
+                        + " = ?";
+
+                returnValue = db.update(
+                  AppContract.QuestionsEntry.TABLE_NAME,
+                  values,
+                  whereClause,
+                  whereArgs
+                );
+
+                break;
+
+            default:
+                return 0;
+        }
+
+
+        return returnValue;
+
     }
 
     public static UriMatcher buildUriMatcher(){
         UriMatcher uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
         uriMatcher.addURI(AppContract.AUTHORITY,AppContract.PATH_QUESTIONS,QUESTIONS);
+        uriMatcher.addURI(AppContract.AUTHORITY,AppContract.PATH_QUESTIONS + "/session/#",QUESTIONS_WITH_SESSION_ID);
+        uriMatcher.addURI(AppContract.AUTHORITY,AppContract.PATH_QUESTIONS+"/#",QUESTION_BY_ID);
+
         uriMatcher.addURI(AppContract.AUTHORITY,AppContract.PATH_CHOICES,CHOICES);
         uriMatcher.addURI(AppContract.AUTHORITY,AppContract.PATH_CHOICES + "/#",CHOICES_WITH_QUESTION_ID);
+
+
         uriMatcher.addURI(AppContract.AUTHORITY,AppContract.PATH_SESSION,SESSION);
         uriMatcher.addURI(AppContract.AUTHORITY,AppContract.PATH_SESSION + "/*",SESSION_FOR_CATEGORY);
+        uriMatcher.addURI(AppContract.AUTHORITY,AppContract.PATH_QUESTIONS + "/update/*",QUESTION_ANSWER_CHOSEN);
+
         return uriMatcher;
     }
 }

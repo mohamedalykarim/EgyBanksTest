@@ -36,11 +36,13 @@ public class QuizActivity extends AppCompatActivity {
     private static final String ENGLISH_ALAHLY = "english_alahly";
     private static final String TECHNICAL_ALAHLY = "technical_alahly";
     private static final String QUESTION_CATEGORY = "question_category";
+    private static final String SESSION = "session";
 
 
     ViewPager viewPager;
     MyQuizPager pagerAdapter;
     ArrayList<Question> questionsFromSession;
+    String selectedQuiz = "";
 
 
 
@@ -64,7 +66,7 @@ public class QuizActivity extends AppCompatActivity {
     }
 
     private void handleSession() {
-        String selectedQuiz = "";
+
 
         if (getIntent().hasExtra(SELECTED_QUIZ)){
             selectedQuiz = getIntent().getStringExtra(SELECTED_QUIZ);
@@ -74,7 +76,7 @@ public class QuizActivity extends AppCompatActivity {
                     .appendPath(selectedQuiz)
                     .build();
 
-            Cursor cursorSession = getContentResolver().query(
+            Cursor sessionCursor = getContentResolver().query(
                     sessionUri,
                     null,
                     null,
@@ -82,10 +84,12 @@ public class QuizActivity extends AppCompatActivity {
                     null);
 
 
-            if (cursorSession.getCount() > 0){
+            if (sessionCursor.getCount() > 0){
                 /**
                  * if there is a session
                  */
+
+                getCurrentSession();
 
             }else{
                 /**
@@ -166,24 +170,109 @@ public class QuizActivity extends AppCompatActivity {
             questionsContentvalues.put(AppContract.QuestionsEntry.COLUMN_QUESTION_TEXT,questions.get(i).getQuestion_text());
             questionsContentvalues.put(AppContract.QuestionsEntry.COLUMN_QUESTION_TYPE,questions.get(i).getQuestion_type());
 
+
             Uri newQuestionUri = getContentResolver().insert(questionUri,questionsContentvalues);
             int questionID = Integer.parseInt(newQuestionUri.getPathSegments().get(1));
 
             HashMap<String, HashMap<String, Object>> choicesString = questions.get(i).getChoices();
             Iterator it = choicesString.entrySet().iterator();
+
             while (it.hasNext()){
                 HashMap.Entry<String, HashMap<String, Object>> choices = (HashMap.Entry<String, HashMap<String, Object>>) it.next();
                 HashMap<String,Object> choice = choices.getValue();
                 Iterator choiceIT = choice.entrySet().iterator();
+                Choice desiredChoice = new Choice();
                 while (choiceIT.hasNext()){
                     HashMap.Entry<String,Object> theChoice = (HashMap.Entry<String, Object>) choiceIT.next();
+
                     if (theChoice.getKey().equals("is_correct")){
-                        Log.v("choice :", theChoice.getValue().toString());
+                        if (theChoice.getValue().toString().equals("true")){
+                            desiredChoice.setCorrect(1);
+                        }else if (theChoice.getValue().toString().equals("false")){
+                            desiredChoice.setCorrect(0);
+                        }
+                    }
+
+                    if (theChoice.getKey().equals("choice_text")){
+                        desiredChoice.setChoiceText(theChoice.getValue().toString());
                     }
                 }
+
+                ContentValues choiceValues = new ContentValues();
+                choiceValues.put("choice_text", desiredChoice.getChoiceText());
+                choiceValues.put("is_correct", desiredChoice.isCorrect());
+                choiceValues.put("question_id", questionID);
+
+                getContentResolver().insert(choicesUri,choiceValues);
+
             }
 
 
+
+        }
+
+
+        getCurrentSession();
+
+    }
+
+    public void getCurrentSession(){
+        Uri sessionCategoryUri = AppContract.SessionEntry.CONTENT_URI
+                .buildUpon()
+                .appendPath(selectedQuiz)
+                .build();
+
+
+
+        Cursor sessionCursor = getContentResolver()
+                .query(sessionCategoryUri,
+                        null,
+                        null,
+                        null
+                        ,null);
+
+        sessionCursor.moveToFirst();
+
+
+        if (sessionCursor.getCount() > 0) {
+            int sessionId = sessionCursor.getInt(sessionCursor.getColumnIndex(AppContract.SessionEntry._ID));
+
+            Uri qusetionSessionUri = AppContract.QuestionsEntry.CONTENT_URI
+                    .buildUpon()
+                    .appendPath(SESSION)
+                    .appendPath(String.valueOf(sessionId))
+                    .build();
+
+
+            Cursor questionsCursor = getContentResolver().query(
+                    qusetionSessionUri,
+                    null,
+                    null,
+                    null,
+                    null
+            );
+
+
+            while (questionsCursor.moveToNext()) {
+                int question_id = questionsCursor
+                        .getInt(questionsCursor.getColumnIndex(AppContract.QuestionsEntry._ID));
+
+                String question_type = questionsCursor
+                        .getString(questionsCursor.getColumnIndex(AppContract.QuestionsEntry.COLUMN_QUESTION_TYPE));
+
+                String question_text = questionsCursor
+                        .getString(questionsCursor.getColumnIndex(AppContract.QuestionsEntry.COLUMN_QUESTION_TEXT));
+
+                Question question = new Question();
+
+                question.setQuestionId(question_id);
+                question.setQuestion_text(question_text);
+                question.setQuestion_type(question_type);
+
+                questionsFromSession.add(question);
+            }
+
+            pagerAdapter.notifyDataSetChanged();
 
         }
     }

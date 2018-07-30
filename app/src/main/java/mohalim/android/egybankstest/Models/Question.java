@@ -8,13 +8,15 @@ import java.util.HashMap;
 import java.util.List;
 
 public class Question implements Parcelable{
+    int questionId;
     String question_type, question_category, question_text;
     HashMap<String, HashMap<String,Object>> choices;
 
     public Question() {
     }
 
-    public Question(String question_type, String question_category, String question_text, HashMap<String, HashMap<String, Object>> choices) {
+    public Question(int questionId, String question_type, String question_category, String question_text, HashMap<String, HashMap<String, Object>> choices) {
+        this.questionId = questionId;
         this.question_type = question_type;
         this.question_category = question_category;
         this.question_text = question_text;
@@ -22,6 +24,7 @@ public class Question implements Parcelable{
     }
 
     protected Question(Parcel in) {
+        questionId = in.readInt();
         question_type = in.readString();
         question_category = in.readString();
         question_text = in.readString();
@@ -29,6 +32,7 @@ public class Question implements Parcelable{
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(questionId);
         dest.writeString(question_type);
         dest.writeString(question_category);
         dest.writeString(question_text);
@@ -50,6 +54,14 @@ public class Question implements Parcelable{
             return new Question[size];
         }
     };
+
+    public int getQuestionId() {
+        return questionId;
+    }
+
+    public void setQuestionId(int questionId) {
+        this.questionId = questionId;
+    }
 
     public String getQuestion_type() {
         return question_type;
