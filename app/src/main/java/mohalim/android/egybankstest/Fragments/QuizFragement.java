@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -33,6 +34,7 @@ public class QuizFragement extends Fragment implements LoaderManager.LoaderCallb
 
     private static final int GET_CHOICES_LOADER_ID = 100;
     private static final int UPDATE_CHOSEN_ANSWER_LOADER_ID = 101;
+    private static final String CHECKED_ID = "checked_id";
 
     ArrayList<Question> questions;
     ArrayList<Choice> choices;
@@ -41,24 +43,10 @@ public class QuizFragement extends Fragment implements LoaderManager.LoaderCallb
     RadioGroup radioGroup;
     TextView questionText;
 
-    public static QuizFragement newInstance(ArrayList<Question> questions, int position) {
-        Bundle args = new Bundle();
-        args.putParcelableArrayList(QUESTIONS,questions);
-        args.putInt(POSITION,position);
-        
-        QuizFragement fragment = new QuizFragement();
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        if (getArguments().containsKey(POSITION) && getArguments().containsKey(QUESTIONS)){
-            questions = getArguments().getParcelableArrayList(QUESTIONS);
-            questionPosition = getArguments().getInt(POSITION);
-        }
 
         choices = new ArrayList<>();
 
@@ -95,9 +83,8 @@ public class QuizFragement extends Fragment implements LoaderManager.LoaderCallb
 
     @NonNull
     @Override
-    public Loader<Cursor> onCreateLoader(int id, @Nullable Bundle args) {
+    public Loader<Cursor> onCreateLoader(int id, @Nullable final Bundle args) {
         if (id==GET_CHOICES_LOADER_ID){
-
 
             Uri choicesUri = AppContract.ChoiceEntry.CONTENT_URI
                     .buildUpon()
@@ -118,6 +105,53 @@ public class QuizFragement extends Fragment implements LoaderManager.LoaderCallb
                     null
             );
 
+        }else if(id == UPDATE_CHOSEN_ANSWER_LOADER_ID){
+
+            return new AsyncTaskLoader<Cursor>(getActivity()) {
+                @Nullable
+                @Override
+                public Cursor loadInBackground() {
+
+                    radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+                        @Override
+                        public void onCheckedChanged(RadioGroup group, int checkedId) {
+
+                            Uri updateChosenUri = AppContract.QuestionsEntry.CONTENT_URI
+                                    .buildUpon()
+                                    .appendPath(UPDATE)
+                                    .appendPath(String.valueOf(questions.get(questionPosition).getQuestionId())).build();
+
+                            ContentValues contentValues = new ContentValues();
+
+                            contentValues.put(AppContract.QuestionsEntry.COLUMN_ANSWER_CHOSEN,checkedId);
+
+                            getActivity().getContentResolver().update(updateChosenUri,contentValues,null,null);
+
+
+
+                            Cursor cursor = getActivity().getContentResolver().query(
+                                    AppContract.QuestionsEntry.CONTENT_URI.buildUpon().appendPath(String.valueOf(questions.get(questionPosition).getQuestionId())).build(),
+                                    null,null,null,null
+                            );
+
+                            if (cursor.getCount() == 1){
+                                cursor.moveToFirst();
+                                Log.v("string", cursor.getInt(cursor.getColumnIndex(AppContract.QuestionsEntry.COLUMN_ANSWER_CHOSEN))+"");
+                            }
+
+
+                        }
+                    });
+
+
+
+
+
+
+                    return null;
+                }
+            };
+
         }
 
         return null;
@@ -128,62 +162,58 @@ public class QuizFragement extends Fragment implements LoaderManager.LoaderCallb
 
 
 
-        if (choicesCursor.getCount() >0){
-            while (choicesCursor.moveToNext()){
-                String text = choicesCursor.getString(choicesCursor.getColumnIndex(AppContract.ChoiceEntry.COLUMN_CHOICE_TEXT));
-                int is_correct = choicesCursor.getInt(choicesCursor.getColumnIndex(AppContract.ChoiceEntry.COLUMN_IS_TRUE));
+        if (loader.getId() == GET_CHOICES_LOADER_ID){
 
-                Choice choice = new Choice();
-                choice.setChoiceText(text);
-                choice.setCorrect(is_correct);
+            if (choicesCursor.getCount() >0){
+                while (choicesCursor.moveToNext()){
+                    String text = choicesCursor.getString(choicesCursor.getColumnIndex(AppContract.ChoiceEntry.COLUMN_CHOICE_TEXT));
+                    int is_correct = choicesCursor.getInt(choicesCursor.getColumnIndex(AppContract.ChoiceEntry.COLUMN_IS_TRUE));
 
-                choices.add(choice);
-            }
+                    Choice choice = new Choice();
+                    choice.setChoiceText(text);
+                    choice.setCorrect(is_correct);
 
-            for (int i=0; i<choices.size();i++){
-                LayoutInflater inflater = LayoutInflater.from(getContext());
-                final View radioButton = inflater.inflate(R.layout.radio_button,radioGroup,false);
-                ((RadioButton) radioButton).setText(choices.get(i).getChoiceText());
-                radioButton.setTag(choices.get(i).isCorrect());
-                radioGroup.addView(radioButton);
-            }
+                    choices.add(choice);
+                }
 
+                for (int i=0; i<choices.size();i++){
+                    LayoutInflater inflater = LayoutInflater.from(getContext());
+                    final View radioButton = inflater.inflate(R.layout.radio_button,radioGroup,false);
+                    ((RadioButton) radioButton).setText(choices.get(i).getChoiceText());
+                    radioButton.setTag(choices.get(i).isCorrect());
+                    radioGroup.addView(radioButton);
+                }
 
-        }
-
-        for (int i = 0; i<radioGroup.getChildCount();i++){
-            radioGroup.getChildAt(i).setId(i+1);
-        }
-
-
-        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-
-
-                Uri updateChosenUri = AppContract.QuestionsEntry.CONTENT_URI
-                        .buildUpon()
-                        .appendPath(UPDATE)
-                        .appendPath(String.valueOf(questions.get(questionPosition).getQuestionId())).build();
-
-                ContentValues contentValues = new ContentValues();
-                contentValues.put(AppContract.QuestionsEntry.COLUMN_ANSWER_CHOSEN,checkedId);
-
-                getActivity().getContentResolver().update(updateChosenUri,contentValues,null,null);
-
-
-
-                Cursor cursor = getActivity().getContentResolver().query(
-                        AppContract.QuestionsEntry.CONTENT_URI.buildUpon().appendPath(String.valueOf(questions.get(questionPosition).getQuestionId())).build(),
-                        null,null,null,null
-                );
-
-                if (cursor.getCount() == 1){
-                    cursor.moveToFirst();
-                    Log.v("string", cursor.getInt(cursor.getColumnIndex(AppContract.QuestionsEntry.COLUMN_ANSWER_CHOSEN))+"");
+                for (int i = 0; i<radioGroup.getChildCount();i++){
+                    radioGroup.getChildAt(i).setId(i+1);
                 }
             }
-        });
+
+            if (getActivity().getSupportLoaderManager() != null){
+
+                getActivity().getSupportLoaderManager()
+                        .restartLoader(
+                                UPDATE_CHOSEN_ANSWER_LOADER_ID,
+                                null,
+                                this).forceLoad();
+            }else {
+
+                getActivity().getSupportLoaderManager()
+                        .initLoader(
+                                UPDATE_CHOSEN_ANSWER_LOADER_ID,
+                                null,
+                                this).forceLoad();
+            }
+
+
+        }
+
+
+
+
+
+
+
 
 
     }
@@ -191,5 +221,21 @@ public class QuizFragement extends Fragment implements LoaderManager.LoaderCallb
     @Override
     public void onLoaderReset(@NonNull Loader<Cursor> loader) {
 
+    }
+
+    public void setQuestions(ArrayList<Question> questions) {
+        this.questions = questions;
+    }
+
+    public void setQuestionPosition(int questionPosition) {
+        this.questionPosition = questionPosition;
+    }
+
+    public ArrayList<Question> getQuestions() {
+        return questions;
+    }
+
+    public int getQuestionPosition() {
+        return questionPosition;
     }
 }

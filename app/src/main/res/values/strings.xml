@@ -52,4 +52,6 @@
     <string name="personal_title">Personal:</string>
     <string name="contact_title">Contact:</string>
     <string name="email_title">Email:</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
 </resources>

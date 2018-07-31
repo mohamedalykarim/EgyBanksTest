@@ -20,11 +20,18 @@ public class MyQuizPager extends FragmentStatePagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        return QuizFragement.newInstance(questions, position);
+        QuizFragement fragment = new QuizFragement();
+        fragment.setQuestions(questions);
+        fragment.setQuestionPosition(position);
+
+        return fragment;
     }
 
     @Override
     public int getCount() {
         return questions.size();
     }
+
+
+
 }
