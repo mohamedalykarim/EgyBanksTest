@@ -114,6 +114,40 @@ public class ResultActivity extends AppCompatActivity implements LoaderManager.L
 
 
 
+                    getContentResolver().delete(
+                            sessionCategoryUri,
+                            null,
+                            null
+                    );
+
+
+                    getContentResolver().delete(
+                            qusetionSessionUri,
+                            null,
+                            null
+                    );
+
+                    questionsCursor.moveToFirst();
+                    questionsCursor.moveToPrevious();
+
+                    while (questionsCursor.moveToNext()){
+
+                        int questionId = questionsCursor
+                                .getInt(questionsCursor.getColumnIndex(AppContract.QuestionsEntry._ID));
+
+
+                        Uri choiceUri = AppContract.ChoiceEntry.CONTENT_URI
+                                .buildUpon()
+                                .appendPath(questionId+"")
+                                .build();
+
+                        getContentResolver().delete(
+                                choiceUri,
+                                null,
+                                null
+                        );
+                    }
+
 
 
                 }

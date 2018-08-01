@@ -11,6 +11,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 public class AppContentProvider extends ContentProvider {
 
@@ -239,6 +240,21 @@ public class AppContentProvider extends ContentProvider {
                                 selectionArgs
                               );
 
+                break;
+
+
+            case  SESSION_FOR_CATEGORY:
+
+                String category = uri.getPathSegments().get(1);
+                String categorySelection = AppContract.SessionEntry.COLUMN_SESSION_CATEGORY + "=?";
+                String[] categorySelectionArgs = new String[]{category};
+
+                rowDeleted = db.delete(
+                  AppContract.SessionEntry.TABLE_NAME,
+                  categorySelection,
+                  categorySelectionArgs
+                );
+
 
                 break;
 
@@ -247,6 +263,20 @@ public class AppContentProvider extends ContentProvider {
                         AppContract.QuestionsEntry.TABLE_NAME,
                         selection,
                         selectionArgs
+                );
+
+
+                break;
+
+            case QUESTIONS_WITH_SESSION_ID:
+                String sessionId = uri.getPathSegments().get(2);
+                String questionsSelection = AppContract.QuestionsEntry.COLUMN_SESSION_ID + "=?";
+                String[] questionSelectionArgs = new String[]{sessionId};
+
+                rowDeleted = db.delete(
+                        AppContract.QuestionsEntry.TABLE_NAME,
+                        questionsSelection,
+                        questionSelectionArgs
                 );
 
 
@@ -261,6 +291,21 @@ public class AppContentProvider extends ContentProvider {
 
 
                 break;
+
+            case CHOICES_WITH_QUESTION_ID:
+
+                String questionId = uri.getPathSegments().get(1);
+                String questionIDSelection = AppContract.ChoiceEntry.COLUMN_QUESTION_ID + " = ?";
+                String[] questionIDSelectionArgs = new String[]{questionId};
+
+                rowDeleted = db.delete(
+                        AppContract.ChoiceEntry.TABLE_NAME,
+                        questionIDSelection,
+                        questionIDSelectionArgs
+                );
+
+                break;
+
 
             default:
                 return 0;
@@ -305,6 +350,8 @@ public class AppContentProvider extends ContentProvider {
         uriMatcher.addURI(AppContract.AUTHORITY,AppContract.PATH_QUESTIONS,QUESTIONS);
         uriMatcher.addURI(AppContract.AUTHORITY,AppContract.PATH_QUESTIONS + "/session/#",QUESTIONS_WITH_SESSION_ID);
         uriMatcher.addURI(AppContract.AUTHORITY,AppContract.PATH_QUESTIONS+"/#",QUESTION_BY_ID);
+        uriMatcher.addURI(AppContract.AUTHORITY,AppContract.PATH_QUESTIONS + "/update/*",QUESTION_ANSWER_CHOSEN);
+
 
         uriMatcher.addURI(AppContract.AUTHORITY,AppContract.PATH_CHOICES,CHOICES);
         uriMatcher.addURI(AppContract.AUTHORITY,AppContract.PATH_CHOICES + "/#",CHOICES_WITH_QUESTION_ID);
@@ -312,7 +359,6 @@ public class AppContentProvider extends ContentProvider {
 
         uriMatcher.addURI(AppContract.AUTHORITY,AppContract.PATH_SESSION,SESSION);
         uriMatcher.addURI(AppContract.AUTHORITY,AppContract.PATH_SESSION + "/*",SESSION_FOR_CATEGORY);
-        uriMatcher.addURI(AppContract.AUTHORITY,AppContract.PATH_QUESTIONS + "/update/*",QUESTION_ANSWER_CHOSEN);
 
         return uriMatcher;
     }

@@ -13,14 +13,12 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -134,6 +132,11 @@ public class QuizFragement extends Fragment implements LoaderManager.LoaderCallb
                 Intent intent = new Intent(getActivity(), ResultActivity.class);
                 intent.putExtra(SELECTED_QUIZ,selectedQuiz);
                 startActivity(intent);
+                getActivity().getSupportLoaderManager().destroyLoader(GET_CHOICES_LOADER_ID);
+                getActivity().getSupportLoaderManager().destroyLoader(GET_CHOSEN_ANSWER_LOADER_ID);
+                getActivity().getSupportLoaderManager().destroyLoader(GET_CHOICES_LOADER_ID_FIRST);
+                getActivity().getSupportLoaderManager().destroyLoader(GET_CHOSEN_ANSWER_LOADER_ID_FIRST);
+                getActivity().getSupportLoaderManager().destroyLoader(UPDATE_ANSWER_LOADER_ID);
                 getActivity().finish();
             }
         });
