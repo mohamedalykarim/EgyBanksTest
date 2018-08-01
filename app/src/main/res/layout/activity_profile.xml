@@ -100,67 +100,66 @@
         <LinearLayout
             android:id="@+id/linearLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="1137dp"
             android:layout_marginTop="8dp"
             android:orientation="vertical"
-            app:layout_constraintTop_toBottomOf="@+id/textView4">
+            app:layout_constraintTop_toBottomOf="@+id/have_profile"
+            tools:layout_editor_absoluteX="0dp">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/colorAccent"
-                android:textSize="16sp"
-                android:text="@string/name_title"
-                android:layout_marginStart="32dp"
                 android:layout_marginEnd="32dp"
+                android:layout_marginStart="32dp"
                 android:layout_marginTop="8dp"
-                />
+                android:text="@string/name_title"
+                android:textColor="@color/colorAccent"
+                android:textSize="16sp" />
 
             <EditText
                 android:id="@+id/et_name"
-                android:inputType="textPersonName"
-                android:hint="@string/name"
-
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
+
                 android:layout_marginEnd="32dp"
                 android:layout_marginLeft="32dp"
                 android:layout_marginRight="32dp"
                 android:layout_marginStart="32dp"
                 android:background="#313540"
+                android:hint="@string/name"
+                android:inputType="textPersonName"
                 android:padding="10dp"
-                android:textSize="14sp"
                 android:textColor="#dadada"
-                android:textColorHint="#545b6e" />
+                android:textColorHint="#545b6e"
+                android:textSize="14sp" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/colorAccent"
-                android:textSize="16sp"
-                android:text="@string/about_me_title"
-                android:layout_marginStart="32dp"
                 android:layout_marginEnd="32dp"
+                android:layout_marginStart="32dp"
                 android:layout_marginTop="8dp"
-                />
+                android:text="@string/about_me_title"
+                android:textColor="@color/colorAccent"
+                android:textSize="16sp" />
 
             <EditText
                 android:id="@+id/et_about_me"
-                android:inputType="text|textMultiLine|textCapSentences"
-                android:hint="@string/about_me"
-
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:minHeight="50dp"
+
                 android:layout_marginEnd="32dp"
                 android:layout_marginLeft="32dp"
                 android:layout_marginRight="32dp"
                 android:layout_marginStart="32dp"
                 android:background="#313540"
+                android:hint="@string/about_me"
+                android:inputType="text|textMultiLine|textCapSentences"
+                android:minHeight="50dp"
                 android:padding="10dp"
-                android:textSize="14sp"
                 android:textColor="#dadada"
-                android:textColorHint="#545b6e" />
+                android:textColorHint="#545b6e"
+                android:textSize="14sp" />
 
             <View
                 android:layout_width="match_parent"
@@ -169,58 +168,58 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/colorAccent"
-                android:textSize="16sp"
-                android:text="@string/experience_title"
-                android:layout_marginStart="32dp"
                 android:layout_marginEnd="32dp"
+                android:layout_marginStart="32dp"
                 android:layout_marginTop="8dp"
-                />
+                android:text="@string/experience_title"
+                android:textColor="@color/colorAccent"
+                android:textSize="16sp" />
+
             <EditText
                 android:id="@+id/et_experience"
-                android:inputType="text|textMultiLine|textCapSentences"
-                android:hint="@string/experience"
-
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:minHeight="50dp"
+
                 android:layout_marginEnd="32dp"
                 android:layout_marginLeft="32dp"
                 android:layout_marginRight="32dp"
                 android:layout_marginStart="32dp"
                 android:background="#313540"
+                android:hint="@string/experience"
+                android:inputType="text|textMultiLine|textCapSentences"
+                android:minHeight="50dp"
                 android:padding="10dp"
-                android:textSize="14sp"
                 android:textColor="#dadada"
-                android:textColorHint="#545b6e" />
+                android:textColorHint="#545b6e"
+                android:textSize="14sp" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/colorAccent"
-                android:textSize="16sp"
-                android:text="@string/education_title"
-                android:layout_marginStart="32dp"
                 android:layout_marginEnd="32dp"
+                android:layout_marginStart="32dp"
                 android:layout_marginTop="8dp"
-                />
+                android:text="@string/education_title"
+                android:textColor="@color/colorAccent"
+                android:textSize="16sp" />
+
             <EditText
                 android:id="@+id/et_education"
-                android:inputType="text|textMultiLine|textCapSentences"
-                android:hint="@string/education"
-
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:minHeight="50dp"
+
                 android:layout_marginEnd="32dp"
                 android:layout_marginLeft="32dp"
                 android:layout_marginRight="32dp"
                 android:layout_marginStart="32dp"
                 android:background="#313540"
+                android:hint="@string/education"
+                android:inputType="text|textMultiLine|textCapSentences"
+                android:minHeight="50dp"
                 android:padding="10dp"
-                android:textSize="14sp"
                 android:textColor="#dadada"
-                android:textColorHint="#545b6e" />
+                android:textColorHint="#545b6e"
+                android:textSize="14sp" />
 
             <View
                 android:layout_width="match_parent"
@@ -229,86 +228,86 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/colorAccent"
-                android:textSize="16sp"
-                android:text="@string/skills_title"
-                android:layout_marginStart="32dp"
                 android:layout_marginEnd="32dp"
+                android:layout_marginStart="32dp"
                 android:layout_marginTop="8dp"
-                />
+                android:text="@string/skills_title"
+                android:textColor="@color/colorAccent"
+                android:textSize="16sp" />
+
             <EditText
                 android:id="@+id/et_skills"
-                android:inputType="text|textMultiLine|textCapSentences"
-                android:hint="@string/skills"
-
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:minHeight="50dp"
+
                 android:layout_marginEnd="32dp"
                 android:layout_marginLeft="32dp"
                 android:layout_marginRight="32dp"
                 android:layout_marginStart="32dp"
                 android:background="#313540"
+                android:hint="@string/skills"
+                android:inputType="text|textMultiLine|textCapSentences"
+                android:minHeight="50dp"
                 android:padding="10dp"
-                android:textSize="14sp"
                 android:textColor="#dadada"
-                android:textColorHint="#545b6e" />
+                android:textColorHint="#545b6e"
+                android:textSize="14sp" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/colorAccent"
-                android:textSize="16sp"
-                android:text="@string/certifications_title"
-                android:layout_marginStart="32dp"
                 android:layout_marginEnd="32dp"
+                android:layout_marginStart="32dp"
                 android:layout_marginTop="8dp"
-                />
+                android:text="@string/certifications_title"
+                android:textColor="@color/colorAccent"
+                android:textSize="16sp" />
+
             <EditText
                 android:id="@+id/et_certifications"
-                android:inputType="text|textMultiLine|textCapSentences"
-                android:hint="@string/certifications"
-
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:minHeight="50dp"
+
                 android:layout_marginEnd="32dp"
                 android:layout_marginLeft="32dp"
                 android:layout_marginRight="32dp"
                 android:layout_marginStart="32dp"
                 android:background="#313540"
+                android:hint="@string/certifications"
+                android:inputType="text|textMultiLine|textCapSentences"
+                android:minHeight="50dp"
                 android:padding="10dp"
-                android:textSize="14sp"
                 android:textColor="#dadada"
-                android:textColorHint="#545b6e" />
+                android:textColorHint="#545b6e"
+                android:textSize="14sp" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/colorAccent"
-                android:textSize="16sp"
-                android:text="@string/courses_title"
-                android:layout_marginStart="32dp"
                 android:layout_marginEnd="32dp"
+                android:layout_marginStart="32dp"
                 android:layout_marginTop="8dp"
-                />
+                android:text="@string/courses_title"
+                android:textColor="@color/colorAccent"
+                android:textSize="16sp" />
+
             <EditText
                 android:id="@+id/et_courses"
-                android:inputType="text|textMultiLine|textCapSentences"
-                android:hint="@string/courses"
-
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:minHeight="50dp"
+
                 android:layout_marginEnd="32dp"
                 android:layout_marginLeft="32dp"
                 android:layout_marginRight="32dp"
                 android:layout_marginStart="32dp"
                 android:background="#313540"
+                android:hint="@string/courses"
+                android:inputType="text|textMultiLine|textCapSentences"
+                android:minHeight="50dp"
                 android:padding="10dp"
-                android:textSize="14sp"
                 android:textColor="#dadada"
-                android:textColorHint="#545b6e" />
+                android:textColorHint="#545b6e"
+                android:textSize="14sp" />
 
 
             <View
@@ -318,42 +317,41 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/colorAccent"
-                android:textSize="16sp"
-                android:text="@string/language_title"
-                android:layout_marginStart="32dp"
                 android:layout_marginEnd="32dp"
+                android:layout_marginStart="32dp"
                 android:layout_marginTop="8dp"
-                />
+                android:text="@string/language_title"
+                android:textColor="@color/colorAccent"
+                android:textSize="16sp" />
+
             <EditText
                 android:id="@+id/et_language"
-                android:inputType="text|textMultiLine|textCapSentences"
-                android:hint="@string/language"
-
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:minHeight="50dp"
+
                 android:layout_marginEnd="32dp"
                 android:layout_marginLeft="32dp"
                 android:layout_marginRight="32dp"
                 android:layout_marginStart="32dp"
                 android:background="#313540"
+                android:hint="@string/language"
+                android:inputType="text|textMultiLine|textCapSentences"
+                android:minHeight="50dp"
                 android:padding="10dp"
-                android:textSize="14sp"
                 android:textColor="#dadada"
-                android:textColorHint="#545b6e" />
+                android:textColorHint="#545b6e"
+                android:textSize="14sp" />
 
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/colorAccent"
-                android:textSize="16sp"
-                android:text="@string/birth_date_title"
-                android:layout_marginStart="32dp"
                 android:layout_marginEnd="32dp"
+                android:layout_marginStart="32dp"
                 android:layout_marginTop="8dp"
-                />
+                android:text="@string/birth_date_title"
+                android:textColor="@color/colorAccent"
+                android:textSize="16sp" />
 
             <Button
                 android:id="@+id/birth_date_btn"
@@ -375,147 +373,170 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/colorAccent"
-                android:textSize="16sp"
-                android:text="@string/nationality_title"
-                android:layout_marginStart="32dp"
                 android:layout_marginEnd="32dp"
+                android:layout_marginStart="32dp"
                 android:layout_marginTop="8dp"
-                />
+                android:text="@string/nationality_title"
+                android:textColor="@color/colorAccent"
+                android:textSize="16sp" />
+
             <EditText
                 android:id="@+id/et_nationality"
-                android:inputType="text"
-                android:hint="@string/nationality"
-
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:minHeight="50dp"
+
                 android:layout_marginEnd="32dp"
                 android:layout_marginLeft="32dp"
                 android:layout_marginRight="32dp"
                 android:layout_marginStart="32dp"
                 android:background="#313540"
+                android:hint="@string/nationality"
+                android:inputType="text"
+                android:minHeight="50dp"
                 android:padding="10dp"
-                android:textSize="14sp"
                 android:textColor="#dadada"
-                android:textColorHint="#545b6e" />
+                android:textColorHint="#545b6e"
+                android:textSize="14sp" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/colorAccent"
-                android:textSize="16sp"
-                android:text="@string/phone_title"
-                android:layout_marginStart="32dp"
                 android:layout_marginEnd="32dp"
+                android:layout_marginStart="32dp"
                 android:layout_marginTop="8dp"
-                />
+                android:text="@string/phone_title"
+                android:textColor="@color/colorAccent"
+                android:textSize="16sp" />
+
             <EditText
                 android:id="@+id/et_phone"
-                android:inputType="phone"
-                android:hint="@string/phone"
-
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:minHeight="50dp"
+
                 android:layout_marginEnd="32dp"
                 android:layout_marginLeft="32dp"
                 android:layout_marginRight="32dp"
                 android:layout_marginStart="32dp"
                 android:background="#313540"
+                android:hint="@string/phone"
+                android:inputType="phone"
+                android:minHeight="50dp"
                 android:padding="10dp"
-                android:textSize="14sp"
                 android:textColor="#dadada"
-                android:textColorHint="#545b6e" />
+                android:textColorHint="#545b6e"
+                android:textSize="14sp" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/colorAccent"
-                android:textSize="16sp"
-                android:text="@string/mobile_title"
-                android:layout_marginStart="32dp"
                 android:layout_marginEnd="32dp"
+                android:layout_marginStart="32dp"
                 android:layout_marginTop="8dp"
-                />
+                android:text="@string/mobile_title"
+                android:textColor="@color/colorAccent"
+                android:textSize="16sp" />
+
             <EditText
                 android:id="@+id/et_mobile"
-                android:inputType="phone"
-                android:hint="@string/mobile"
-
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:minHeight="50dp"
+
                 android:layout_marginEnd="32dp"
                 android:layout_marginLeft="32dp"
                 android:layout_marginRight="32dp"
                 android:layout_marginStart="32dp"
                 android:background="#313540"
+                android:hint="@string/mobile"
+                android:inputType="phone"
+                android:minHeight="50dp"
                 android:padding="10dp"
-                android:textSize="14sp"
                 android:textColor="#dadada"
-                android:textColorHint="#545b6e" />
+                android:textColorHint="#545b6e"
+                android:textSize="14sp" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/colorAccent"
-                android:textSize="16sp"
-                android:text="@string/address_title"
-                android:layout_marginStart="32dp"
                 android:layout_marginEnd="32dp"
+                android:layout_marginStart="32dp"
                 android:layout_marginTop="8dp"
-                />
+                android:text="@string/address_title"
+                android:textColor="@color/colorAccent"
+                android:textSize="16sp" />
+
             <EditText
                 android:id="@+id/et_address"
-                android:inputType="textPostalAddress"
-                android:hint="@string/address"
-
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:minHeight="50dp"
+
                 android:layout_marginEnd="32dp"
                 android:layout_marginLeft="32dp"
                 android:layout_marginRight="32dp"
                 android:layout_marginStart="32dp"
                 android:background="#313540"
+                android:hint="@string/address"
+                android:inputType="textPostalAddress"
+                android:minHeight="50dp"
                 android:padding="10dp"
-                android:textSize="14sp"
                 android:textColor="#dadada"
-                android:textColorHint="#545b6e" />
+                android:textColorHint="#545b6e"
+                android:textSize="14sp" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/colorAccent"
-                android:textSize="16sp"
-                android:text="@string/more_info_title"
-                android:layout_marginStart="32dp"
                 android:layout_marginEnd="32dp"
+                android:layout_marginStart="32dp"
                 android:layout_marginTop="8dp"
-                />
+                android:text="@string/more_info_title"
+                android:textColor="@color/colorAccent"
+                android:textSize="16sp" />
+
             <EditText
                 android:id="@+id/et_more_info"
-                android:inputType="text|textMultiLine|textCapSentences"
-                android:hint="@string/more_info"
-
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:minHeight="50dp"
+
                 android:layout_marginEnd="32dp"
                 android:layout_marginLeft="32dp"
                 android:layout_marginRight="32dp"
                 android:layout_marginStart="32dp"
                 android:background="#313540"
+                android:hint="@string/more_info"
+                android:inputType="text|textMultiLine|textCapSentences"
+                android:minHeight="50dp"
                 android:padding="10dp"
-                android:textSize="14sp"
                 android:textColor="#dadada"
-                android:textColorHint="#545b6e" />
-
-
+                android:textColorHint="#545b6e"
+                android:textSize="14sp" />
 
 
         </LinearLayout>
+
+        <FrameLayout
+            android:id="@+id/have_profile"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:background="@color/red"
+            android:padding="10dp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView4">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|center_horizontal"
+                android:text="@string/modify_your_profile_have_one"
+                android:textColor="@color/light_text_color"
+                android:textAlignment="center"
+                android:textSize="14sp" />
+
+        </FrameLayout>
 
     </android.support.constraint.ConstraintLayout>
 

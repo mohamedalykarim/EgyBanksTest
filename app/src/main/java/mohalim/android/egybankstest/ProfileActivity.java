@@ -47,7 +47,7 @@ public class ProfileActivity extends AppCompatActivity {
 
     Button datePickerButton;
     ImageView profileImage;
-    FrameLayout updateProfileImageLoading;
+    FrameLayout updateProfileImageLoading, haveProfile;
 
     DatabaseReference userReference;
     FirebaseAuth mAuth;
@@ -80,6 +80,15 @@ public class ProfileActivity extends AppCompatActivity {
         datePickerButton = findViewById(R.id.birth_date_btn);
 
         updateProfileImageLoading = findViewById(R.id.loading_profile_image);
+        haveProfile = findViewById(R.id.have_profile);
+
+        haveProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(ProfileActivity.this,SignUpActivity.class));
+                finish();
+            }
+        });
 
         mAuth = FirebaseAuth.getInstance();
         user = mAuth.getCurrentUser();
@@ -87,8 +96,9 @@ public class ProfileActivity extends AppCompatActivity {
 
         if (mAuth.getCurrentUser() !=null){
            retrieveData();
+           haveProfile.setVisibility(View.GONE);
         }else{
-
+            haveProfile.setVisibility(View.VISIBLE);
         }
 
 
@@ -245,5 +255,28 @@ public class ProfileActivity extends AppCompatActivity {
         }else {
             updateProfileImageLoading.setVisibility(View.GONE);
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if (mAuth.getCurrentUser() != null){
+            DatabaseReference birthdateRef = userReference.child("birthdate");
+            birthdateRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    datePickerButton.setText(dataSnapshot.getValue().toString());
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+        }
+
+
+
     }
 }
