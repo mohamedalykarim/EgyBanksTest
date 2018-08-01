@@ -8,15 +8,16 @@ import java.util.HashMap;
 import java.util.List;
 
 public class Question implements Parcelable{
-    int questionId;
+    int questionId, isChosenCorrect;
     String question_type, question_category, question_text;
     HashMap<String, HashMap<String,Object>> choices;
 
     public Question() {
     }
 
-    public Question(int questionId, String question_type, String question_category, String question_text, HashMap<String, HashMap<String, Object>> choices) {
+    public Question(int questionId, int isChosenCorrect, String question_type, String question_category, String question_text, HashMap<String, HashMap<String, Object>> choices) {
         this.questionId = questionId;
+        this.isChosenCorrect = isChosenCorrect;
         this.question_type = question_type;
         this.question_category = question_category;
         this.question_text = question_text;
@@ -25,6 +26,7 @@ public class Question implements Parcelable{
 
     protected Question(Parcel in) {
         questionId = in.readInt();
+        isChosenCorrect = in.readInt();
         question_type = in.readString();
         question_category = in.readString();
         question_text = in.readString();
@@ -33,6 +35,7 @@ public class Question implements Parcelable{
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(questionId);
+        dest.writeInt(isChosenCorrect);
         dest.writeString(question_type);
         dest.writeString(question_category);
         dest.writeString(question_text);
@@ -61,6 +64,14 @@ public class Question implements Parcelable{
 
     public void setQuestionId(int questionId) {
         this.questionId = questionId;
+    }
+
+    public int getIsChosenCorrect() {
+        return isChosenCorrect;
+    }
+
+    public void setIsChosenCorrect(int isChosenCorrect) {
+        this.isChosenCorrect = isChosenCorrect;
     }
 
     public String getQuestion_type() {

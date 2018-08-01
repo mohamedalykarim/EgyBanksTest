@@ -54,4 +54,5 @@
     <string name="email_title">Email:</string>
     <string name="appwidget_text">EXAMPLE</string>
     <string name="add_widget">Add widget</string>
+    <string name="your_result_is">Your Result is:</string>
 </resources>

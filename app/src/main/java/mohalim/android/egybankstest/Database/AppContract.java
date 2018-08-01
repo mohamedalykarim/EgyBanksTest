@@ -23,6 +23,7 @@ public class AppContract {
         public static final String COLUMN_QUESTION_TYPE = "question_type";
         public static final String COLUMN_SESSION_ID = "session_id";
         public static final String COLUMN_ANSWER_CHOSEN = "answer_chosen";
+        public static final String COLUMN_IS_CHOSEN_CORRECT = "is_chosen_correct";
     }
 
     public static class ChoiceEntry implements BaseColumns{

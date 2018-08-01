@@ -35,6 +35,11 @@ public class QuizActivity extends AppCompatActivity {
     private static final String IQ_ALAHLY = "iq_alahly";
     private static final String ENGLISH_ALAHLY = "english_alahly";
     private static final String TECHNICAL_ALAHLY = "technical_alahly";
+
+    private static final String IQ_BANQUEMISR = "iq_banquemisr";
+    private static final String ENGLISH_BANQUEMISR = "english_banquemisr";
+    private static final String TECHNICAL_BANQUEMISR = "technical_banquemisr";
+
     private static final String QUESTION_CATEGORY = "question_category";
     private static final String SESSION = "session";
 
@@ -56,7 +61,10 @@ public class QuizActivity extends AppCompatActivity {
 
         questionsFromSession = new ArrayList<>();
 
-        pagerAdapter = new MyQuizPager(getSupportFragmentManager(),questionsFromSession);
+        if (getIntent().hasExtra(SELECTED_QUIZ))
+            selectedQuiz = getIntent().getStringExtra(SELECTED_QUIZ);
+
+            pagerAdapter = new MyQuizPager(getSupportFragmentManager(),questionsFromSession,selectedQuiz);
         viewPager.setAdapter(pagerAdapter);
 
         handleSession();
@@ -69,7 +77,6 @@ public class QuizActivity extends AppCompatActivity {
 
 
         if (getIntent().hasExtra(SELECTED_QUIZ)){
-            selectedQuiz = getIntent().getStringExtra(SELECTED_QUIZ);
 
             Uri sessionUri = AppContract.SessionEntry.CONTENT_URI
                     .buildUpon()
@@ -97,16 +104,36 @@ public class QuizActivity extends AppCompatActivity {
                  */
                 Query testQuery = null;
 
-                if (selectedQuiz.equals(IQ_ALAHLY)){
-                    testQuery = FirebaseDatabase.getInstance()
-                            .getReference("test").orderByChild(QUESTION_CATEGORY).equalTo(IQ_ALAHLY);
-                }else if (selectedQuiz.equals(ENGLISH_ALAHLY)){
-                    testQuery = FirebaseDatabase.getInstance()
-                            .getReference("test").orderByChild(QUESTION_CATEGORY).equalTo(ENGLISH_ALAHLY);
-                }else if (selectedQuiz.equals(TECHNICAL_ALAHLY)){
-                    testQuery = FirebaseDatabase.getInstance()
-                            .getReference("test").orderByChild(QUESTION_CATEGORY).equalTo(TECHNICAL_ALAHLY);
+                switch (selectedQuiz) {
+                    case IQ_ALAHLY:
+                        testQuery = FirebaseDatabase.getInstance()
+                                .getReference("test").orderByChild(QUESTION_CATEGORY).equalTo(IQ_ALAHLY);
+                        break;
+                    case ENGLISH_ALAHLY:
+                        testQuery = FirebaseDatabase.getInstance()
+                                .getReference("test").orderByChild(QUESTION_CATEGORY).equalTo(ENGLISH_ALAHLY);
+                        break;
+                    case TECHNICAL_ALAHLY:
+                        testQuery = FirebaseDatabase.getInstance()
+                                .getReference("test").orderByChild(QUESTION_CATEGORY).equalTo(TECHNICAL_ALAHLY);
+                        break;
+
+                    case IQ_BANQUEMISR:
+                        testQuery = FirebaseDatabase.getInstance()
+                                .getReference("test").orderByChild(QUESTION_CATEGORY).equalTo(IQ_BANQUEMISR);
+                        break;
+                    case ENGLISH_BANQUEMISR:
+                        testQuery = FirebaseDatabase.getInstance()
+                                .getReference("test").orderByChild(QUESTION_CATEGORY).equalTo(ENGLISH_BANQUEMISR);
+                        break;
+                    case TECHNICAL_BANQUEMISR:
+                        testQuery = FirebaseDatabase.getInstance()
+                                .getReference("test").orderByChild(QUESTION_CATEGORY).equalTo(TECHNICAL_BANQUEMISR);
+                        break;
                 }
+
+
+
 
                 if (testQuery ==null){
                     Toast.makeText(this, "Error: Please Try Again Later", Toast.LENGTH_SHORT).show();
@@ -169,6 +196,7 @@ public class QuizActivity extends AppCompatActivity {
             questionsContentvalues.put(AppContract.QuestionsEntry.COLUMN_QUESTION_CATEGORY,questions.get(i).getQuestion_category());
             questionsContentvalues.put(AppContract.QuestionsEntry.COLUMN_QUESTION_TEXT,questions.get(i).getQuestion_text());
             questionsContentvalues.put(AppContract.QuestionsEntry.COLUMN_QUESTION_TYPE,questions.get(i).getQuestion_type());
+
 
 
             Uri newQuestionUri = getContentResolver().insert(questionUri,questionsContentvalues);
@@ -249,8 +277,8 @@ public class QuizActivity extends AppCompatActivity {
                     null,
                     null,
                     null,
-                    null
-            );
+            null);
+
 
 
             while (questionsCursor.moveToNext()) {

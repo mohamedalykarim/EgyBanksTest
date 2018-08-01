@@ -11,10 +11,12 @@ import mohalim.android.egybankstest.Models.Question;
 
 public class MyQuizPager extends FragmentStatePagerAdapter {
     ArrayList<Question> questions;
+    String selectedQuiz;
 
-    public MyQuizPager(FragmentManager fm, ArrayList<Question> questions) {
+    public MyQuizPager(FragmentManager fm, ArrayList<Question> questions, String selectedQuiz) {
         super(fm);
         this.questions = questions;
+        this.selectedQuiz = selectedQuiz;
     }
 
 
@@ -23,6 +25,7 @@ public class MyQuizPager extends FragmentStatePagerAdapter {
         QuizFragement fragment = new QuizFragement();
         fragment.setQuestions(questions);
         fragment.setQuestionPosition(position);
+        fragment.setSelectedQuiz(selectedQuiz);
 
         return fragment;
     }
@@ -32,6 +35,16 @@ public class MyQuizPager extends FragmentStatePagerAdapter {
         return questions.size();
     }
 
+    @Override
+    public int getItemPosition(Object object) {
+        QuizFragement fragment = (QuizFragement) object;
+        int position = fragment.getQuestionPosition();
 
+        if (position >= 0) {
+            return position;
+        } else {
+            return POSITION_NONE;
+        }
+    }
 
 }

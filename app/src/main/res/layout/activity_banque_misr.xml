@@ -6,4 +6,14 @@
     android:layout_height="match_parent"
     tools:context=".BanqueMisrActivity">
 
+
+    <FrameLayout
+        android:id="@+id/banquemisr_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorPrimary"
+        >
+
+    </FrameLayout>
+
 </android.support.constraint.ConstraintLayout>

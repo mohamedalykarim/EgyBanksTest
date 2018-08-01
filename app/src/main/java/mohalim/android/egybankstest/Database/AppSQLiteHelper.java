@@ -23,7 +23,9 @@ public class AppSQLiteHelper extends SQLiteOpenHelper{
             + AppContract.QuestionsEntry.COLUMN_SESSION_ID
             + " INTEGER NOT NULL,"
             + AppContract.QuestionsEntry.COLUMN_ANSWER_CHOSEN
-            + " INTEGER"
+            + " INTEGER,"
+            + AppContract.QuestionsEntry.COLUMN_IS_CHOSEN_CORRECT
+            + " BOOLEAN DEFAULT 0"
             + ");";
 
     private static final String QUESTION_DROP_TABLE = "DROP TABLE IF EXISTS "

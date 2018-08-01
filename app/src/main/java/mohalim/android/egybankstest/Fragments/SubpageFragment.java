@@ -24,13 +24,18 @@ public class SubpageFragment extends Fragment implements MainMenuRecyclerAdapter
     private static final String MENU = "menu";
     private static final String MENU_NAME = "menu_name";
 
-    private static final String ALAHLY_MENU = "alahly menu";
+    private static final String ALAHLY_MENU = "alahly_menu";
     private static final String BANQUEMISR_MENU = "banquemisr_menu";
 
     private static final String SELECTED_QUIZ = "selected_quiz";
+
     private static final String IQ_ALAHLY = "iq_alahly";
     private static final String ENGLISH_ALAHLY = "english_alahly";
     private static final String TECHNICAL_ALAHLY = "technical_alahly";
+
+    private static final String IQ_BANQUEMISR = "iq_banquemisr";
+    private static final String ENGLISH_BANQUEMISR = "english_banquemisr";
+    private static final String TECHNICAL_BANQUEMISR = "technical_banquemisr";
 
 
     RecyclerView recyclerView;
@@ -96,7 +101,21 @@ public class SubpageFragment extends Fragment implements MainMenuRecyclerAdapter
             }
 
         }else if (menuName.equals(BANQUEMISR_MENU)){
+            if (position == 0){
+                Intent intent = new Intent(getContext(), QuizActivity.class);
+                intent.putExtra(SELECTED_QUIZ, IQ_BANQUEMISR);
+                startActivity(intent);
 
+            }else if (position == 1){
+                Intent intent = new Intent(getContext(), QuizActivity.class);
+                intent.putExtra(SELECTED_QUIZ, ENGLISH_BANQUEMISR);
+                startActivity(intent);
+
+            }else if (position == 2){
+                Intent intent = new Intent(getContext(), QuizActivity.class);
+                intent.putExtra(SELECTED_QUIZ, TECHNICAL_BANQUEMISR);
+                startActivity(intent);
+            }
         }
 
     }

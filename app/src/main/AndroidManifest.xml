@@ -42,11 +42,12 @@
         </receiver>
 
         <service android:name=".Widget.ResumeWidgetService" />
+        <service
+            android:name=".Widget.ListViewRemoteService"
+            android:exported="false"
+            android:permission="android.permission.BIND_REMOTEVIEWS" />
 
-        <service android:name=".Widget.ListViewRemoteService"
-            android:permission="android.permission.BIND_REMOTEVIEWS"
-            android:exported="false" />
-
+        <activity android:name=".ResultActivity"></activity>
     </application>
 
 </manifest>

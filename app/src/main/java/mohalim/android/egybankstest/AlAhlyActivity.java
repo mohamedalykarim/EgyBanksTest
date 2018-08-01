@@ -11,7 +11,7 @@ import mohalim.android.egybankstest.Fragments.SubpageFragment;
 import mohalim.android.egybankstest.Models.MainMenuItem;
 
 public class AlAhlyActivity extends AppCompatActivity {
-    private static final String ALAHLY_MENU = "alahly menu";
+    private static final String ALAHLY_MENU = "alahly_menu";
 
 
     @Override

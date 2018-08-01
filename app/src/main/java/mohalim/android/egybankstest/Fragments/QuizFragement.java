@@ -1,11 +1,13 @@
 package mohalim.android.egybankstest.Fragments;
 
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.AsyncTaskLoader;
@@ -26,19 +28,18 @@ import mohalim.android.egybankstest.Database.AppContract;
 import mohalim.android.egybankstest.Models.Choice;
 import mohalim.android.egybankstest.Models.Question;
 import mohalim.android.egybankstest.R;
+import mohalim.android.egybankstest.ResultActivity;
 
 public class QuizFragement extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>{
-    private static final String QUESTIONS = "questions";
-    private static final String POSITION = "position";
     private static final String UPDATE = "update";
-
     private static final int GET_CHOICES_LOADER_ID = 100;
     private static final int UPDATE_CHOSEN_ANSWER_LOADER_ID = 101;
-    private static final String CHECKED_ID = "checked_id";
+    private static final String SELECTED_QUIZ = "selected_quiz";
 
     ArrayList<Question> questions;
     ArrayList<Choice> choices;
     int questionPosition;
+    String selectedQuiz;
 
     RadioGroup radioGroup;
     TextView questionText;
@@ -47,9 +48,7 @@ public class QuizFragement extends Fragment implements LoaderManager.LoaderCallb
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         choices = new ArrayList<>();
-
     }
 
     @Nullable
@@ -63,17 +62,37 @@ public class QuizFragement extends Fragment implements LoaderManager.LoaderCallb
         questionText.setText(questions.get(questionPosition).getQuestion_text());
 
 
-        if (getActivity().getSupportLoaderManager() == null){
+
+
+
+        if (questionPosition == 0){
             getActivity().getSupportLoaderManager()
                     .initLoader(GET_CHOICES_LOADER_ID,null,this)
                     .forceLoad();
-        }else{
+        }else {
             getActivity().getSupportLoaderManager()
                     .restartLoader(GET_CHOICES_LOADER_ID,null,this)
                     .forceLoad();
+
         }
 
 
+
+
+
+        /**
+         * end the session
+         */
+        FloatingActionButton fab = view.findViewById(R.id.end_session);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), ResultActivity.class);
+                intent.putExtra(SELECTED_QUIZ,selectedQuiz);
+                startActivity(intent);
+                getActivity().finish();
+            }
+        });
 
 
 
@@ -96,6 +115,8 @@ public class QuizFragement extends Fragment implements LoaderManager.LoaderCallb
             String[] questionIDSelectionArgs = new String[]{questionId};
 
 
+
+
             return new CursorLoader(
                     getActivity(),
                     choicesUri,
@@ -104,6 +125,8 @@ public class QuizFragement extends Fragment implements LoaderManager.LoaderCallb
                     questionIDSelectionArgs,
                     null
             );
+
+
 
         }else if(id == UPDATE_CHOSEN_ANSWER_LOADER_ID){
 
@@ -124,6 +147,11 @@ public class QuizFragement extends Fragment implements LoaderManager.LoaderCallb
                             ContentValues contentValues = new ContentValues();
 
                             contentValues.put(AppContract.QuestionsEntry.COLUMN_ANSWER_CHOSEN,checkedId);
+                            if (group.getChildAt(checkedId-1).getTag().toString().equals("1")){
+                                contentValues.put(AppContract.QuestionsEntry.COLUMN_IS_CHOSEN_CORRECT, 1);
+                            }else if (group.getChildAt(checkedId-1).getTag().toString().equals("0")){
+                                contentValues.put(AppContract.QuestionsEntry.COLUMN_IS_CHOSEN_CORRECT, 0);
+                            }
 
                             getActivity().getContentResolver().update(updateChosenUri,contentValues,null,null);
 
@@ -136,7 +164,8 @@ public class QuizFragement extends Fragment implements LoaderManager.LoaderCallb
 
                             if (cursor.getCount() == 1){
                                 cursor.moveToFirst();
-                                Log.v("string", cursor.getInt(cursor.getColumnIndex(AppContract.QuestionsEntry.COLUMN_ANSWER_CHOSEN))+"");
+                                Log.v("string", cursor.getInt(cursor.getColumnIndex(AppContract.QuestionsEntry.COLUMN_IS_CHOSEN_CORRECT))+"");
+                                Log.v("string 2", group.getChildAt(radioGroup.getCheckedRadioButtonId()-1).getTag().toString());
                             }
 
 
@@ -160,6 +189,9 @@ public class QuizFragement extends Fragment implements LoaderManager.LoaderCallb
     @Override
     public void onLoadFinished(@NonNull Loader<Cursor> loader, Cursor choicesCursor) {
 
+        if (questionPosition == 0){
+            Toast.makeText(getActivity(), ""+selectedQuiz, Toast.LENGTH_SHORT).show();
+        }
 
 
         if (loader.getId() == GET_CHOICES_LOADER_ID){
@@ -187,31 +219,28 @@ public class QuizFragement extends Fragment implements LoaderManager.LoaderCallb
                 for (int i = 0; i<radioGroup.getChildCount();i++){
                     radioGroup.getChildAt(i).setId(i+1);
                 }
+
             }
 
-            if (getActivity().getSupportLoaderManager() != null){
-
-                getActivity().getSupportLoaderManager()
-                        .restartLoader(
-                                UPDATE_CHOSEN_ANSWER_LOADER_ID,
-                                null,
-                                this).forceLoad();
-            }else {
-
+            if (questionPosition == 0){
                 getActivity().getSupportLoaderManager()
                         .initLoader(
                                 UPDATE_CHOSEN_ANSWER_LOADER_ID,
                                 null,
                                 this).forceLoad();
+            }else {
+                getActivity().getSupportLoaderManager()
+                        .restartLoader(
+                                UPDATE_CHOSEN_ANSWER_LOADER_ID,
+                                null,
+                                this).forceLoad();
+
             }
 
 
+
+
         }
-
-
-
-
-
 
 
 
@@ -237,5 +266,9 @@ public class QuizFragement extends Fragment implements LoaderManager.LoaderCallb
 
     public int getQuestionPosition() {
         return questionPosition;
+    }
+
+    public void setSelectedQuiz(String selectedQuiz) {
+        this.selectedQuiz = selectedQuiz;
     }
 }
