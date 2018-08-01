@@ -32,9 +32,18 @@ import mohalim.android.egybankstest.ResultActivity;
 
 public class QuizFragement extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>{
     private static final String UPDATE = "update";
-    private static final int GET_CHOICES_LOADER_ID = 100;
-    private static final int UPDATE_CHOSEN_ANSWER_LOADER_ID = 101;
     private static final String SELECTED_QUIZ = "selected_quiz";
+    private static final String CHECKED_ID = "checked_id";
+
+    private static final int GET_CHOICES_LOADER_ID = 100;
+    private static final int GET_CHOSEN_ANSWER_LOADER_ID = 101;
+
+    private static final int GET_CHOICES_LOADER_ID_FIRST = 103;
+    private static final int GET_CHOSEN_ANSWER_LOADER_ID_FIRST = 104;
+
+    private static final int UPDATE_ANSWER_LOADER_ID = 105;
+
+
 
     ArrayList<Question> questions;
     ArrayList<Choice> choices;
@@ -43,6 +52,7 @@ public class QuizFragement extends Fragment implements LoaderManager.LoaderCallb
 
     RadioGroup radioGroup;
     TextView questionText;
+    int chosenAsnwer = 0;
 
 
     @Override
@@ -62,27 +72,61 @@ public class QuizFragement extends Fragment implements LoaderManager.LoaderCallb
         questionText.setText(questions.get(questionPosition).getQuestion_text());
 
 
-
-
+        /**
+         * initiate the loader or restart it depending on the position
+         * of the question.
+         */
 
         if (questionPosition == 0){
-            getActivity().getSupportLoaderManager()
-                    .initLoader(GET_CHOICES_LOADER_ID,null,this)
-                    .forceLoad();
+
+            if (getActivity().getSupportLoaderManager() == null){
+                getActivity().getSupportLoaderManager().initLoader(
+                        GET_CHOICES_LOADER_ID_FIRST,
+                        null,
+                        this
+                ).forceLoad();
+            }else{
+                getActivity().getSupportLoaderManager().restartLoader(
+                        GET_CHOICES_LOADER_ID_FIRST,
+                        null,
+                        this
+                ).forceLoad();
+            }
+
+
+        }else if (questionPosition == 1){
+            if (getActivity().getSupportLoaderManager() == null){
+                getActivity().getSupportLoaderManager().initLoader(
+                        GET_CHOICES_LOADER_ID,
+                        null,
+                        this
+                ).forceLoad();
+            }else {
+                getActivity().getSupportLoaderManager().restartLoader(
+                        GET_CHOICES_LOADER_ID,
+                        null,
+                        this
+                ).forceLoad();
+            }
+
+
         }else {
-            getActivity().getSupportLoaderManager()
-                    .restartLoader(GET_CHOICES_LOADER_ID,null,this)
-                    .forceLoad();
 
+            getActivity().getSupportLoaderManager().restartLoader(
+                    GET_CHOICES_LOADER_ID,
+                    null,
+                    this
+            ).forceLoad();
         }
-
 
 
 
 
         /**
          * end the session
+         * and go to result activity
          */
+
         FloatingActionButton fab = view.findViewById(R.id.end_session);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -103,7 +147,13 @@ public class QuizFragement extends Fragment implements LoaderManager.LoaderCallb
     @NonNull
     @Override
     public Loader<Cursor> onCreateLoader(int id, @Nullable final Bundle args) {
-        if (id==GET_CHOICES_LOADER_ID){
+
+
+        if (id==GET_CHOICES_LOADER_ID || id == GET_CHOICES_LOADER_ID_FIRST){
+
+            /**
+             * get the choices cursor
+             */
 
             Uri choicesUri = AppContract.ChoiceEntry.CONTENT_URI
                     .buildUpon()
@@ -128,49 +178,38 @@ public class QuizFragement extends Fragment implements LoaderManager.LoaderCallb
 
 
 
-        }else if(id == UPDATE_CHOSEN_ANSWER_LOADER_ID){
+        }else if(id == GET_CHOSEN_ANSWER_LOADER_ID || id == GET_CHOSEN_ANSWER_LOADER_ID_FIRST){
+
+            /**
+             * handle the choices clicks and add the values to the database
+             */
 
             return new AsyncTaskLoader<Cursor>(getActivity()) {
                 @Nullable
                 @Override
                 public Cursor loadInBackground() {
 
-                    radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-                        @Override
-                        public void onCheckedChanged(RadioGroup group, int checkedId) {
+                    Uri questionUri = AppContract.QuestionsEntry.CONTENT_URI
+                            .buildUpon()
+                            .appendPath(questions.get(questionPosition).getQuestionId() +"")
+                            .build();
 
-                            Uri updateChosenUri = AppContract.QuestionsEntry.CONTENT_URI
-                                    .buildUpon()
-                                    .appendPath(UPDATE)
-                                    .appendPath(String.valueOf(questions.get(questionPosition).getQuestionId())).build();
+                    Cursor questionCursor = getActivity().getContentResolver().query(
+                            questionUri,
+                            null,
+                            null,
+                            null,
+                            null
+                    );
 
-                            ContentValues contentValues = new ContentValues();
+                    if (questionCursor.getCount() > 0){
+                        questionCursor.moveToFirst();
+                        chosenAsnwer = questionCursor.getInt(
+                          questionCursor.getColumnIndex(AppContract.QuestionsEntry.COLUMN_ANSWER_CHOSEN)
+                        );
 
-                            contentValues.put(AppContract.QuestionsEntry.COLUMN_ANSWER_CHOSEN,checkedId);
-                            if (group.getChildAt(checkedId-1).getTag().toString().equals("1")){
-                                contentValues.put(AppContract.QuestionsEntry.COLUMN_IS_CHOSEN_CORRECT, 1);
-                            }else if (group.getChildAt(checkedId-1).getTag().toString().equals("0")){
-                                contentValues.put(AppContract.QuestionsEntry.COLUMN_IS_CHOSEN_CORRECT, 0);
-                            }
+                    }
 
-                            getActivity().getContentResolver().update(updateChosenUri,contentValues,null,null);
-
-
-
-                            Cursor cursor = getActivity().getContentResolver().query(
-                                    AppContract.QuestionsEntry.CONTENT_URI.buildUpon().appendPath(String.valueOf(questions.get(questionPosition).getQuestionId())).build(),
-                                    null,null,null,null
-                            );
-
-                            if (cursor.getCount() == 1){
-                                cursor.moveToFirst();
-                                Log.v("string", cursor.getInt(cursor.getColumnIndex(AppContract.QuestionsEntry.COLUMN_IS_CHOSEN_CORRECT))+"");
-                                Log.v("string 2", group.getChildAt(radioGroup.getCheckedRadioButtonId()-1).getTag().toString());
-                            }
-
-
-                        }
-                    });
 
 
 
@@ -181,6 +220,49 @@ public class QuizFragement extends Fragment implements LoaderManager.LoaderCallb
                 }
             };
 
+        }else if (id == UPDATE_ANSWER_LOADER_ID){
+            return new AsyncTaskLoader<Cursor>(getActivity()) {
+                @Nullable
+                @Override
+                public Cursor loadInBackground() {
+
+
+                    int checkedId = args.getInt(CHECKED_ID);
+
+
+                    Uri updateChosenUri = AppContract.QuestionsEntry.CONTENT_URI
+                            .buildUpon()
+                            .appendPath(UPDATE)
+                            .appendPath(String.valueOf(questions.get(questionPosition).getQuestionId())).build();
+
+                    ContentValues contentValues = new ContentValues();
+
+                    contentValues.put(AppContract.QuestionsEntry.COLUMN_ANSWER_CHOSEN,checkedId);
+                    if (radioGroup.getChildAt(checkedId-1).getTag().toString().equals("1")){
+                        contentValues.put(AppContract.QuestionsEntry.COLUMN_IS_CHOSEN_CORRECT, 1);
+                    }else if (radioGroup.getChildAt(checkedId-1).getTag().toString().equals("0")){
+                        contentValues.put(AppContract.QuestionsEntry.COLUMN_IS_CHOSEN_CORRECT, 0);
+                    }
+
+                    getActivity().getContentResolver().update(updateChosenUri,contentValues,null,null);
+
+
+
+                            /*Cursor cursor = getActivity().getContentResolver().query(
+                                    AppContract.QuestionsEntry.CONTENT_URI.buildUpon().appendPath(String.valueOf(questions.get(questionPosition).getQuestionId())).build(),
+                                    null,null,null,null
+                            );
+
+                            if (cursor.getCount() == 1){
+                                cursor.moveToFirst();
+                                Log.v("string", cursor.getInt(cursor.getColumnIndex(AppContract.QuestionsEntry.COLUMN_IS_CHOSEN_CORRECT))+"");
+                                Log.v("string 2", group.getChildAt(radioGroup.getCheckedRadioButtonId()-1).getTag().toString());
+                            }*/
+
+
+                    return null;
+                }
+            };
         }
 
         return null;
@@ -189,62 +271,147 @@ public class QuizFragement extends Fragment implements LoaderManager.LoaderCallb
     @Override
     public void onLoadFinished(@NonNull Loader<Cursor> loader, Cursor choicesCursor) {
 
+
+        /**
+         * add the choices views and handle it
+         */
+
+        if (loader.getId() == GET_CHOICES_LOADER_ID_FIRST || loader.getId() == GET_CHOICES_LOADER_ID){
+
+            handleGetChoicesLoader(choicesCursor);
+        }else if (loader.getId() == GET_CHOSEN_ANSWER_LOADER_ID || loader.getId() == GET_CHOSEN_ANSWER_LOADER_ID_FIRST){
+            if (chosenAsnwer != 0){
+                radioGroup.check(chosenAsnwer);
+                for (int i =0; i<radioGroup.getChildCount(); i++){
+                    radioGroup.getChildAt(i).setBackgroundResource(R.drawable.rounded_radio);
+                    radioGroup.getChildAt(chosenAsnwer-1).setBackgroundResource(R.drawable.selected_rounded_radio);
+                }
+
+            }
+
+
+            radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(RadioGroup group, int checkedId) {
+
+                    for (int i =0; i<group.getChildCount(); i++){
+                        group.getChildAt(i).setBackgroundResource(R.drawable.rounded_radio);
+                        group.getChildAt(checkedId-1).setBackgroundResource(R.drawable.selected_rounded_radio);
+                    }
+
+                    Bundle bundle = new Bundle();
+                    bundle.putInt(CHECKED_ID, checkedId);
+
+                    if (getActivity().getSupportLoaderManager() == null){
+                        getActivity().getSupportLoaderManager().initLoader(
+                                UPDATE_ANSWER_LOADER_ID,
+                                bundle,
+                                QuizFragement.this
+                        ).forceLoad();
+                    }else{
+
+                        getActivity().getSupportLoaderManager().restartLoader(
+                                UPDATE_ANSWER_LOADER_ID,
+                                bundle,
+                                QuizFragement.this
+                        ).forceLoad();
+
+                    }
+
+
+
+                }
+            });
+
+
+        }
+
+
+
+
+
+
+
+    }
+
+    /**
+     * this method get choices cursor and convert it to radio buttons
+     * and add views to radio group.
+     * @param choicesCursor
+     */
+
+    public void handleGetChoicesLoader(Cursor choicesCursor){
+        if (choicesCursor.getCount() >0){
+            while (choicesCursor.moveToNext()){
+                String text = choicesCursor.getString(choicesCursor.getColumnIndex(AppContract.ChoiceEntry.COLUMN_CHOICE_TEXT));
+                int is_correct = choicesCursor.getInt(choicesCursor.getColumnIndex(AppContract.ChoiceEntry.COLUMN_IS_TRUE));
+
+                Choice choice = new Choice();
+                choice.setChoiceText(text);
+                choice.setCorrect(is_correct);
+
+                choices.add(choice);
+            }
+
+            for (int i=0; i<choices.size();i++){
+                LayoutInflater inflater = LayoutInflater.from(getContext());
+                final View radioButton = inflater.inflate(R.layout.radio_button,radioGroup,false);
+                ((RadioButton) radioButton).setText(choices.get(i).getChoiceText());
+                radioButton.setTag(choices.get(i).isCorrect());
+                radioGroup.addView(radioButton);
+            }
+
+            for (int i = 0; i<radioGroup.getChildCount();i++){
+                radioGroup.getChildAt(i).setId(i+1);
+            }
+
+
+
+        }
+
+
         if (questionPosition == 0){
-            Toast.makeText(getActivity(), ""+selectedQuiz, Toast.LENGTH_SHORT).show();
-        }
+            if (getActivity().getSupportLoaderManager() == null){
 
+                getActivity().getSupportLoaderManager().initLoader(
+                        GET_CHOSEN_ANSWER_LOADER_ID_FIRST,
+                        null,
+                        this
+                ).forceLoad();
+            }else{
 
-        if (loader.getId() == GET_CHOICES_LOADER_ID){
-
-            if (choicesCursor.getCount() >0){
-                while (choicesCursor.moveToNext()){
-                    String text = choicesCursor.getString(choicesCursor.getColumnIndex(AppContract.ChoiceEntry.COLUMN_CHOICE_TEXT));
-                    int is_correct = choicesCursor.getInt(choicesCursor.getColumnIndex(AppContract.ChoiceEntry.COLUMN_IS_TRUE));
-
-                    Choice choice = new Choice();
-                    choice.setChoiceText(text);
-                    choice.setCorrect(is_correct);
-
-                    choices.add(choice);
-                }
-
-                for (int i=0; i<choices.size();i++){
-                    LayoutInflater inflater = LayoutInflater.from(getContext());
-                    final View radioButton = inflater.inflate(R.layout.radio_button,radioGroup,false);
-                    ((RadioButton) radioButton).setText(choices.get(i).getChoiceText());
-                    radioButton.setTag(choices.get(i).isCorrect());
-                    radioGroup.addView(radioButton);
-                }
-
-                for (int i = 0; i<radioGroup.getChildCount();i++){
-                    radioGroup.getChildAt(i).setId(i+1);
-                }
-
+                getActivity().getSupportLoaderManager().restartLoader(
+                        GET_CHOSEN_ANSWER_LOADER_ID_FIRST,
+                        null,
+                        this
+                ).forceLoad();
             }
+        }else if (questionPosition == 1){
 
-            if (questionPosition == 0){
-                getActivity().getSupportLoaderManager()
-                        .initLoader(
-                                UPDATE_CHOSEN_ANSWER_LOADER_ID,
-                                null,
-                                this).forceLoad();
+            if (getActivity().getSupportLoaderManager() == null){
+                getActivity().getSupportLoaderManager().initLoader(
+                        GET_CHOSEN_ANSWER_LOADER_ID,
+                        null,
+                        this
+                ).forceLoad();
             }else {
-                getActivity().getSupportLoaderManager()
-                        .restartLoader(
-                                UPDATE_CHOSEN_ANSWER_LOADER_ID,
-                                null,
-                                this).forceLoad();
-
+                getActivity().getSupportLoaderManager().restartLoader(
+                        GET_CHOSEN_ANSWER_LOADER_ID,
+                        null,
+                        this
+                ).forceLoad();
             }
 
 
 
+        }else {
 
+            getActivity().getSupportLoaderManager().restartLoader(
+                    GET_CHOSEN_ANSWER_LOADER_ID,
+                    null,
+                    this
+            ).forceLoad();
         }
-
-
-
-
     }
 
     @Override
@@ -271,4 +438,6 @@ public class QuizFragement extends Fragment implements LoaderManager.LoaderCallb
     public void setSelectedQuiz(String selectedQuiz) {
         this.selectedQuiz = selectedQuiz;
     }
+
 }
+
