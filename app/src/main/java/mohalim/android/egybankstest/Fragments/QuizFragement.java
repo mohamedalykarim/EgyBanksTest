@@ -151,7 +151,7 @@ public class QuizFragement extends Fragment implements LoaderManager.LoaderCallb
                 getActivity().getSupportLoaderManager().destroyLoader(GET_CHOICES_LOADER_ID_FIRST);
                 getActivity().getSupportLoaderManager().destroyLoader(GET_CHOSEN_ANSWER_LOADER_ID_FIRST);
                 getActivity().getSupportLoaderManager().destroyLoader(UPDATE_ANSWER_LOADER_ID);
-                getActivity().finish();
+                getActivity().finishAfterTransition();
             }
         });
 

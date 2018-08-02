@@ -168,4 +168,9 @@ public class ResultActivity extends AppCompatActivity implements LoaderManager.L
     public void onLoaderReset(@NonNull Loader<Integer> loader) {
 
     }
+
+    @Override
+    public void onBackPressed() {
+        finishAfterTransition();
+    }
 }
