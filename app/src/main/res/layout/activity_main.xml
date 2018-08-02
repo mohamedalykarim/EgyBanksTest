@@ -6,7 +6,8 @@
     android:layout_height="match_parent"
     android:transitionGroup="false"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:background="@color/colorPrimary">
+    android:background="@color/colorPrimary"
+    >
 
 
     <FrameLayout
@@ -41,6 +42,8 @@
         android:layout_height="match_parent"
         android:layout_marginTop="?attr/actionBarSize"
         android:orientation="vertical"
+        android:layout_marginStart="@dimen/main_activity_margin"
+        android:layout_marginEnd="@dimen/main_activity_margin"
 
         >
 

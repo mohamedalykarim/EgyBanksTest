@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
     tools:context=".AlAhlyActivity">
 
     <FrameLayout
@@ -10,6 +11,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/colorPrimary"
+        android:layout_marginStart="@dimen/main_activity_margin"
+        android:layout_marginEnd="@dimen/main_activity_margin"
         >
 
     </FrameLayout>

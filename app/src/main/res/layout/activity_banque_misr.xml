@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     tools:context=".BanqueMisrActivity"
     android:transitionGroup="false"
+    android:background="@color/colorPrimary"
     >
 
 
@@ -14,6 +15,8 @@
         android:layout_height="match_parent"
         android:background="@color/colorPrimary"
         android:transitionGroup="false"
+        android:layout_marginStart="@dimen/main_activity_margin"
+        android:layout_marginEnd="@dimen/main_activity_margin"
         >
 
     </FrameLayout>
