@@ -13,6 +13,9 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
+import android.transition.Slide;
+import android.transition.TransitionManager;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -356,12 +359,17 @@ public class QuizFragement extends Fragment implements LoaderManager.LoaderCallb
                 choices.add(choice);
             }
 
+            Slide slide = new Slide(Gravity.BOTTOM);
+
             for (int i=0; i<choices.size();i++){
                 LayoutInflater inflater = LayoutInflater.from(getContext());
                 final View radioButton = inflater.inflate(R.layout.radio_button,radioGroup,false);
                 ((RadioButton) radioButton).setText(choices.get(i).getChoiceText());
                 radioButton.setTag(choices.get(i).isCorrect());
                 radioGroup.addView(radioButton);
+
+                if (questionPosition == 0)
+                TransitionManager.beginDelayedTransition(radioGroup,slide);
             }
 
             for (int i = 0; i<radioGroup.getChildCount();i++){

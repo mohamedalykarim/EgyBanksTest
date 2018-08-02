@@ -28,7 +28,7 @@ public class ResumeActivity extends AppCompatActivity {
 
     TextView primaryNameTV,
             aboutMeTV, educationTV, experienceTV, certificationsTV,
-             coursesTV, skillsTV, moreInfoTV,
+            coursesTV, skillsTV, moreInfoTV,
             nameTV, birthDateTV, nationalityTV, languagesTV, phoneTV, mobileTV, emailTV, addressTV,
             aboutmeTitle, educationTitle, experienceTitle, certificationsTitle,
             coursesTitle, skillsTitle, moreInfoTitle;
@@ -94,65 +94,84 @@ public class ResumeActivity extends AppCompatActivity {
         if (intent.hasExtra(RESUMES_EXTRA)){
             UserProfile userProfile = intent.getParcelableExtra(RESUMES_EXTRA);
 
-                primaryNameTV.setText(userProfile.getName());
+            primaryNameTV.setText(userProfile.getName());
 
-                aboutMeTV.setText(userProfile.getAboutMe());
+            aboutMeTV.setText(userProfile.getAboutMe());
 
-                educationTV.setText(userProfile.getEducation());
+            educationTV.setText(userProfile.getEducation());
 
-                experienceTV.setText(userProfile.getExperience());
+            experienceTV.setText(userProfile.getExperience());
 
-                certificationsTV.setText(userProfile.getCertifications());
+            certificationsTV.setText(userProfile.getCertifications());
 
-                coursesTV.setText(userProfile.getCourses());
+            coursesTV.setText(userProfile.getCourses());
 
-                skillsTV.setText(userProfile.getSkills());
+            skillsTV.setText(userProfile.getSkills());
 
-                moreInfoTV.setText(userProfile.getExtraInfo());
+            moreInfoTV.setText(userProfile.getExtraInfo());
 
-                if (!TextUtils.isEmpty(userProfile.getProfileImage())){
-                    Picasso.get().load(userProfile.getProfileImage())
-                            .placeholder(getResources().getDrawable(R.drawable.default_profile))
-                            .into(profileImage);
+            if (!TextUtils.isEmpty(userProfile.getProfileImage())){
+                Picasso.get().load(userProfile.getProfileImage())
+                        .placeholder(getResources().getDrawable(R.drawable.default_profile))
+                        .into(profileImage);
 
-                    Picasso.get().load(userProfile.getProfileImage())
-                            .placeholder(getResources().getDrawable(R.drawable.default_profile))
-                            .into(backgroundProfile, new Callback() {
-                                @Override
-                                public void onSuccess() {
-                                    Bitmap bitmap = ((BitmapDrawable)backgroundProfile.getDrawable()).getBitmap();
-                                    Palette palette =  Palette.from(bitmap).generate();
-                                    int backgroundColor = palette.getDarkMutedColor(Color.DKGRAY);
-                                    int titleColor = palette.getMutedColor(Color.GRAY);
-                                    int subtitleColor = palette.getLightMutedColor(Color.LTGRAY);
+                Picasso.get().load(userProfile.getProfileImage())
+                        .placeholder(getResources().getDrawable(R.drawable.default_profile))
+                        .into(backgroundProfile, new Callback() {
+                            @Override
+                            public void onSuccess() {
+                                Bitmap bitmap = ((BitmapDrawable)backgroundProfile.getDrawable()).getBitmap();
+                                Palette palette =  Palette.from(bitmap).generate();
+                                int backgroundColor = palette.getDarkMutedColor(Color.DKGRAY);
+                                int titleColor = palette.getMutedColor(Color.GRAY);
+                                int subtitleColor = palette.getLightMutedColor(Color.LTGRAY);
 
-                                    backgroundColor = ColorUtils.setAlphaComponent(backgroundColor, 235);
-                                    transparent.setBackgroundColor(backgroundColor);
-                                    setColors(titleColor,subtitleColor);
+                                backgroundColor = ColorUtils.setAlphaComponent(backgroundColor, 235);
+                                transparent.setBackgroundColor(backgroundColor);
+                                setColors(titleColor,subtitleColor);
 
 
 
-                                }
+                            }
 
-                                @Override
-                                public void onError(Exception e) {
+                            @Override
+                            public void onError(Exception e) {
 
-                                }
-                            });
+                            }
+                        });
 
-                }else{
-                    Picasso.get().load(R.drawable.default_profile).into(profileImage);
-                    Picasso.get().load(R.drawable.default_profile).into(backgroundProfile);
-                }
+            }else{
+                Picasso.get().load(R.drawable.default_profile).into(profileImage);
+                Picasso.get().load(R.drawable.default_profile).into(backgroundProfile, new Callback() {
+                    @Override
+                    public void onSuccess() {
+                        Bitmap bitmap = ((BitmapDrawable)backgroundProfile.getDrawable()).getBitmap();
+                        Palette palette =  Palette.from(bitmap).generate();
+                        int backgroundColor = palette.getDarkMutedColor(Color.DKGRAY);
+                        int titleColor = palette.getMutedColor(Color.GRAY);
+                        int subtitleColor = palette.getLightMutedColor(Color.LTGRAY);
 
-                nameTV.setText(userProfile.getName());
-                emailTV.setText(userProfile.getEmail());
-                birthDateTV.setText(userProfile.getBirthdate());
-                nationalityTV.setText(userProfile.getNationality());
-                languagesTV.setText(userProfile.getLangauge());
-                phoneTV.setText(userProfile.getPhone());
-                mobileTV.setText(userProfile.getMobile());
-                addressTV.setText(userProfile.getLocation());
+                        backgroundColor = ColorUtils.setAlphaComponent(backgroundColor, 235);
+                        transparent.setBackgroundColor(backgroundColor);
+                        setColors(titleColor,subtitleColor);
+
+                    }
+
+                    @Override
+                    public void onError(Exception e) {
+
+                    }
+                });
+            }
+
+            nameTV.setText(userProfile.getName());
+            emailTV.setText(userProfile.getEmail());
+            birthDateTV.setText(userProfile.getBirthdate());
+            nationalityTV.setText(userProfile.getNationality());
+            languagesTV.setText(userProfile.getLangauge());
+            phoneTV.setText(userProfile.getPhone());
+            mobileTV.setText(userProfile.getMobile());
+            addressTV.setText(userProfile.getLocation());
 
 
         }
@@ -160,15 +179,15 @@ public class ResumeActivity extends AppCompatActivity {
     }
 
     public void  setColors(int titleColor, int subTitleColor){
-                primaryNameTV.setTextColor(subTitleColor);
+        primaryNameTV.setTextColor(subTitleColor);
 
-                aboutMeTV.setTextColor(titleColor);
-                educationTV.setTextColor(titleColor);
-                experienceTV.setTextColor(titleColor);
-                certificationsTV.setTextColor(titleColor);
-                coursesTV.setTextColor(titleColor);
-                skillsTV.setTextColor(titleColor);
-                moreInfoTV.setTextColor(titleColor);
+        aboutMeTV.setTextColor(titleColor);
+        educationTV.setTextColor(titleColor);
+        experienceTV.setTextColor(titleColor);
+        certificationsTV.setTextColor(titleColor);
+        coursesTV.setTextColor(titleColor);
+        skillsTV.setTextColor(titleColor);
+        moreInfoTV.setTextColor(titleColor);
 
         primaryLine.setBackgroundColor(subTitleColor);
         aboutMeLine.setBackgroundColor(subTitleColor);

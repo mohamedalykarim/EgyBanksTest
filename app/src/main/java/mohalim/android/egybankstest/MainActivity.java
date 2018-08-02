@@ -1,5 +1,6 @@
 package mohalim.android.egybankstest;
 
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.NonNull;
@@ -39,7 +40,7 @@ import mohalim.android.egybankstest.Models.UserProfile;
 
 public class MainActivity extends AppCompatActivity
         implements MainResmueRecyclerViewAdapter.MainResumeItemClickListener,
-                   MainMenuRecyclerAdapter.MainMenuClickListener{
+        MainMenuRecyclerAdapter.MainMenuClickListener{
 
     private static final String RESUMES_EXTRA = "extra_resume";
     RecyclerView resumeRecycler, mainMenuRecycler;
@@ -88,14 +89,20 @@ public class MainActivity extends AppCompatActivity
         menuLoginContainer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, LoginActivity.class));
+                startActivity(
+                        new Intent(MainActivity.this, LoginActivity.class),
+                        ActivityOptions.makeSceneTransitionAnimation(MainActivity.this).toBundle()
+                );
             }
         });
 
         menuSignUpContainer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, SignUpActivity.class));
+                startActivity(
+                        new Intent(MainActivity.this, SignUpActivity.class),
+                        ActivityOptions.makeSceneTransitionAnimation(MainActivity.this).toBundle()
+                );
             }
         });
 
@@ -168,7 +175,7 @@ public class MainActivity extends AppCompatActivity
 
 
         if(mAuth.getCurrentUser() != null)
-        getUserData();
+            getUserData();
 
     }
 
@@ -237,7 +244,7 @@ public class MainActivity extends AppCompatActivity
         }
 
 
-        
+
 
     }
 
@@ -269,11 +276,20 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onMenuItemClickListener(int position) {
         if (position == 0){
-            startActivity(new Intent(MainActivity.this, AlAhlyActivity.class));
+            startActivity(
+                    new Intent(MainActivity.this, AlAhlyActivity.class),
+                    ActivityOptions.makeSceneTransitionAnimation(MainActivity.this).toBundle()
+            );
         }else if(position == 1){
-            startActivity(new Intent(MainActivity.this, BanqueMisrActivity.class));
+            startActivity(
+                    new Intent(MainActivity.this, BanqueMisrActivity.class),
+                    ActivityOptions.makeSceneTransitionAnimation(MainActivity.this).toBundle()
+            );
         }else if (position == 2){
-            startActivity(new Intent(MainActivity.this, ProfileActivity.class));
+            startActivity(
+                    new Intent(MainActivity.this, ProfileActivity.class),
+                    ActivityOptions.makeSceneTransitionAnimation(MainActivity.this).toBundle()
+            );
         }
 
     }
