@@ -151,7 +151,12 @@ public class MainActivity extends AppCompatActivity
 
         resumeRecycler = findViewById(R.id.resume_recycler_view);
         resumeLayoutManager = new LinearLayoutManager(this);
-        resumeLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        if (findViewById(R.id.land_linear) != null){
+            resumeLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        }else{
+            resumeLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        }
+
         resumes = new ArrayList<>();
         mainResmueRecyclerViewAdapter = new MainResmueRecyclerViewAdapter(this,resumes,this);
         resumeRecycler.setLayoutManager(resumeLayoutManager);

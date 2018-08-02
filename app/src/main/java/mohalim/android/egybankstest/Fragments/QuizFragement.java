@@ -43,7 +43,8 @@ public class QuizFragement extends Fragment implements LoaderManager.LoaderCallb
     private static final int GET_CHOSEN_ANSWER_LOADER_ID_FIRST = 104;
 
     private static final int UPDATE_ANSWER_LOADER_ID = 105;
-
+    private static final String QUESTION_POSITION = "question_position";
+    private static final String QUESTIONS = "questions";
 
 
     ArrayList<Question> questions;
@@ -69,6 +70,16 @@ public class QuizFragement extends Fragment implements LoaderManager.LoaderCallb
         questionText = view.findViewById(R.id.m);
         radioGroup = view.findViewById(R.id.choices_radio);
         radioGroup.removeAllViews();
+
+        if (savedInstanceState != null){
+            if (savedInstanceState.containsKey(QUESTION_POSITION))
+                questionPosition = savedInstanceState.getInt(QUESTION_POSITION);
+
+            if (savedInstanceState.containsKey(QUESTIONS))
+                questions = savedInstanceState.getParcelableArrayList(QUESTIONS);
+        }
+
+
 
         questionText.setText(questions.get(questionPosition).getQuestion_text());
 
@@ -423,6 +434,14 @@ public class QuizFragement extends Fragment implements LoaderManager.LoaderCallb
                     this
             ).forceLoad();
         }
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        outState.putInt(QUESTION_POSITION,questionPosition);
+        outState.putParcelableArrayList(QUESTIONS, questions);
     }
 
     @Override

@@ -12,7 +12,7 @@ import mohalim.android.egybankstest.Models.MainMenuItem;
 
 public class AlAhlyActivity extends AppCompatActivity {
     private static final String ALAHLY_MENU = "alahly_menu";
-
+    Fragment alahlyFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,10 +24,12 @@ public class AlAhlyActivity extends AppCompatActivity {
         menuItems.add(new MainMenuItem(R.drawable.english_icon,"English Test", "Simulation of English Test"));
         menuItems.add(new MainMenuItem(R.drawable.technical_icon,"Technical Test", "Simulation of Technical Test"));
 
-        Fragment alahlyFragment = SubpageFragment.newInstance(menuItems,ALAHLY_MENU);
-        getSupportFragmentManager().beginTransaction()
-                .add(R.id.alahly_fragment,alahlyFragment)
-                .commit();
+        if (getSupportFragmentManager().getFragments().size() == 0){
+            alahlyFragment = SubpageFragment.newInstance(menuItems,ALAHLY_MENU);
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.alahly_fragment,alahlyFragment)
+                    .commit();
+        }
 
 
     }

@@ -35,22 +35,22 @@
     </FrameLayout>
 
 
-    <FrameLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/land_linear"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="?attr/actionBarSize"
-        android:orientation="vertical"
 
-        >
+        android:orientation="horizontal">
+
 
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/main_menu_recycler"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:transitionGroup="false"
-            >
+            android:layout_weight=".20"
+            android:transitionGroup="false">
 
         </android.support.v7.widget.RecyclerView>
 
@@ -59,14 +59,17 @@
             android:id="@+id/resume_recycler_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:transitionGroup="false"
-            android:elevation="8dp">
+            android:layout_weight=".80"
+            android:elevation="8dp"
+            android:transitionGroup="false">
 
         </android.support.v7.widget.RecyclerView>
 
 
-    </FrameLayout>
+
+
+
+    </LinearLayout>
 
 
 

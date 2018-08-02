@@ -12,6 +12,7 @@ import mohalim.android.egybankstest.Models.MainMenuItem;
 public class BanqueMisrActivity extends AppCompatActivity {
 
     public String BANQUEMISR_MENU = "banquemisr_menu";
+    Fragment alahlyFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,10 +26,17 @@ public class BanqueMisrActivity extends AppCompatActivity {
         menuItems.add(new MainMenuItem(R.drawable.english_icon,"English Test", "Simulation of English Test"));
         menuItems.add(new MainMenuItem(R.drawable.technical_icon,"Technical Test", "Simulation of Technical Test"));
 
-        Fragment alahlyFragment = SubpageFragment.newInstance(menuItems,BANQUEMISR_MENU);
-        getSupportFragmentManager().beginTransaction()
-                .add(R.id.banquemisr_fragment,alahlyFragment)
-                .commit();
+        if (getSupportFragmentManager().getFragments().size()==0){
+            alahlyFragment = SubpageFragment.newInstance(menuItems,BANQUEMISR_MENU);
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.banquemisr_fragment,alahlyFragment)
+                    .commit();
+        }
 
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
     }
 }
