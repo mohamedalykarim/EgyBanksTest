@@ -61,4 +61,21 @@
     <string name="menu_icon">Menu Icon</string>
     <string name="username">Username</string>
     <string name="quiz_icon">Quiz Icon</string>
+    <string name="alahly_test_bank">Alahly Test Bank</string>
+    <string name="alahly_test_desc">You Can Simulate Al ahly Bank Test Here</string>
+    <string name="banquemisr_test_bank">BanqueMisr Test Bank</string>
+    <string name="banquemisr_test_desc">You Can Simulate Banquemisr Bank Test Here</string>
+    <string name="my_profille">My Profile</string>
+    <string name="profile_desc">You Can Add And Modify Your Resume Here</string>
+    <string name="iq_test">IQ Test</string>
+    <string name="iq_desc">Simulation of IQ Test</string>
+    <string name="english_desc">Simulation of English Test</string>
+    <string name="engish_test">English Test</string>
+    <string name="technical_test">Technical Test</string>
+    <string name="technicat_desc">Simulation of Technical Test</string>
+    <string name="need_credintial">Error: Please Type the Correct Credential</string>
+    <string name="update_completed">Update Completed</string>
+    <string name="try_later">Error: Please Try Again Later</string>
+
+
 </resources>

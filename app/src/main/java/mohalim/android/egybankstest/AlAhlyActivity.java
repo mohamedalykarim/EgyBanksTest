@@ -20,9 +20,9 @@ public class AlAhlyActivity extends AppCompatActivity {
         setContentView(R.layout.activity_al_ahly);
 
         ArrayList<MainMenuItem> menuItems = new ArrayList<>();
-        menuItems.add(new MainMenuItem(R.drawable.iq_icon,"IQ Test", "Simulation of IQ Test"));
-        menuItems.add(new MainMenuItem(R.drawable.english_icon,"English Test", "Simulation of English Test"));
-        menuItems.add(new MainMenuItem(R.drawable.technical_icon,"Technical Test", "Simulation of Technical Test"));
+        menuItems.add(new MainMenuItem(R.drawable.iq_icon,getString(R.string.iq_test), getString(R.string.iq_desc)));
+        menuItems.add(new MainMenuItem(R.drawable.english_icon,getString(R.string.engish_test), getString(R.string.english_desc)));
+        menuItems.add(new MainMenuItem(R.drawable.technical_icon,getString(R.string.technical_test), getString(R.string.technicat_desc)));
 
         if (getSupportFragmentManager().getFragments().size() == 0){
             alahlyFragment = SubpageFragment.newInstance(menuItems,ALAHLY_MENU);

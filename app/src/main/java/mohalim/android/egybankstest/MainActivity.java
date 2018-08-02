@@ -45,6 +45,8 @@ public class MainActivity extends AppCompatActivity
 
     private static final String RESUMES_EXTRA = "extra_resume";
     private static final String POSITION_EXTRA = "extra_position";
+    private static final String USER = "users";
+    private static final String NAME = "name";
 
     RecyclerView resumeRecycler, mainMenuRecycler;
     LinearLayoutManager resumeLayoutManager, mainMenuLayoutManager;
@@ -177,9 +179,21 @@ public class MainActivity extends AppCompatActivity
         mainMenuRecycler.setLayoutManager(mainMenuLayoutManager);
         mainMenuRecycler.setAdapter(mainMenuRecyclerAdapter);
 
-        menuItems.add(new MainMenuItem(R.drawable.alahly,"Alahly Test Bank", "You Can Simulate Al ahly Bank Test Here"));
-        menuItems.add(new MainMenuItem(R.drawable.banquemisr ,"BanqueMisr Test Bank", "You Can Simulate Al ahly Bank Test Here"));
-        menuItems.add(new MainMenuItem(R.drawable.profile,"My Profile", "You Can Add And Modify Your Resume Here"));
+        menuItems.add(new MainMenuItem(
+                R.drawable.alahly,
+                getResources().getString(R.string.alahly_test_bank),
+                getResources().getString(R.string.alahly_test_desc)));
+
+
+        menuItems.add(new MainMenuItem(
+                R.drawable.banquemisr ,
+                getResources().getString(R.string.banquemisr_test_bank),
+                getResources().getString(R.string.banquemisr_test_desc)));
+
+        menuItems.add(new MainMenuItem(R.drawable.profile,
+                getResources().getString(R.string.my_profille),
+                getResources().getString(R.string.profile_desc)
+                ));
 
 
         if(mAuth.getCurrentUser() != null)
@@ -204,7 +218,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void getResumes() {
-        resumeQuery = FirebaseDatabase.getInstance().getReference().child("users").orderByChild("name");
+        resumeQuery = FirebaseDatabase.getInstance().getReference().child(USER).orderByChild(NAME);
         resumeQuery.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -230,7 +244,7 @@ public class MainActivity extends AppCompatActivity
 
         if (mAuth.getCurrentUser() != null){
             FirebaseUser currentUser = mAuth.getCurrentUser();
-            DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("users").child(currentUser.getUid());
+            DatabaseReference userRef = FirebaseDatabase.getInstance().getReference(USER).child(currentUser.getUid());
 
             userRef.addValueEventListener(new ValueEventListener() {
                 @Override

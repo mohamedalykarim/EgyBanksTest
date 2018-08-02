@@ -108,7 +108,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         if (task.isSuccessful()){
                             finishAfterTransition();
                         }else{
-                            Toast.makeText(LoginActivity.this, "Error: Please Type the Correct Credential",
+                            Toast.makeText(LoginActivity.this, R.string.need_credintial,
                                     Toast.LENGTH_SHORT).show();
                             loginBtn.setEnabled(true);
                         }

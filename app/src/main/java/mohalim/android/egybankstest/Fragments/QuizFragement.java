@@ -265,16 +265,6 @@ public class QuizFragement extends Fragment implements LoaderManager.LoaderCallb
 
 
 
-                            /*Cursor cursor = getActivity().getContentResolver().query(
-                                    AppContract.QuestionsEntry.CONTENT_URI.buildUpon().appendPath(String.valueOf(questions.get(questionPosition).getQuestionId())).build(),
-                                    null,null,null,null
-                            );
-
-                            if (cursor.getCount() == 1){
-                                cursor.moveToFirst();
-                                Log.v("string", cursor.getInt(cursor.getColumnIndex(AppContract.QuestionsEntry.COLUMN_IS_CHOSEN_CORRECT))+"");
-                                Log.v("string 2", group.getChildAt(radioGroup.getCheckedRadioButtonId()-1).getTag().toString());
-                            }*/
 
 
                     return null;

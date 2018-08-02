@@ -170,7 +170,7 @@ public class ProfileActivity extends AppCompatActivity {
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
-                            Toast.makeText(ProfileActivity.this, "Update Completed", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(ProfileActivity.this, R.string.update_completed, Toast.LENGTH_SHORT).show();
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {

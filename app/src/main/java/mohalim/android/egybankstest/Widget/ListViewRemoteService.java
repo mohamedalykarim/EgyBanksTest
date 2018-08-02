@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.util.Log;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 import android.widget.Toast;
@@ -96,7 +97,8 @@ class ResumeWidgetFactory implements RemoteViewsService.RemoteViewsFactory{
 
 
         try {
-            System.out.println("Loading view " + position);
+            Log.i("","Loading view " + position);
+            System.out.println();
             Thread.sleep(500);
         } catch (InterruptedException e) {
             e.printStackTrace();

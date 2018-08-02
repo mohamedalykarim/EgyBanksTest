@@ -27,7 +27,6 @@ import mohalim.android.egybankstest.Database.AppContract;
 import mohalim.android.egybankstest.Models.Choice;
 import mohalim.android.egybankstest.Models.Question;
 
-import static mohalim.android.egybankstest.Utils.JSONUtils.getChoicesFromJSON;
 
 public class QuizActivity extends AppCompatActivity {
 
@@ -136,7 +135,8 @@ public class QuizActivity extends AppCompatActivity {
 
 
                 if (testQuery ==null){
-                    Toast.makeText(this, "Error: Please Try Again Later", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, R.string.try_later
+                            , Toast.LENGTH_SHORT).show();
                     return;
                 }
 
