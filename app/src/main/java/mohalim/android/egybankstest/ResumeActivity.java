@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.graphics.Palette;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
@@ -25,6 +26,8 @@ import java.util.ArrayList;
 import mohalim.android.egybankstest.Models.UserProfile;
 
 public class ResumeActivity extends AppCompatActivity {
+    private static final String SHARED_IMAGE = "shared_image";
+    private static final String POSITION_EXTRA = "extra_position";
 
     TextView primaryNameTV,
             aboutMeTV, educationTV, experienceTV, certificationsTV,
@@ -91,8 +94,15 @@ public class ResumeActivity extends AppCompatActivity {
         transparent = findViewById(R.id.transparent);
 
         Intent intent = getIntent();
+        if (intent.hasExtra(POSITION_EXTRA)){
+            profileImage.setTransitionName(SHARED_IMAGE+intent.getIntExtra(POSITION_EXTRA,0));
+            Log.v("string", SHARED_IMAGE+intent.getIntExtra(POSITION_EXTRA,0));
+        }
+
         if (intent.hasExtra(RESUMES_EXTRA)){
-            UserProfile userProfile = intent.getParcelableExtra(RESUMES_EXTRA);
+            Bundle bundle = intent.getBundleExtra(RESUMES_EXTRA);
+
+            UserProfile userProfile = bundle.getParcelable(RESUMES_EXTRA);
 
             primaryNameTV.setText(userProfile.getName());
 

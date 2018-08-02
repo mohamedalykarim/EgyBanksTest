@@ -18,6 +18,7 @@ import mohalim.android.egybankstest.Models.UserProfile;
 import mohalim.android.egybankstest.R;
 
 public class MainResmueRecyclerViewAdapter extends RecyclerView.Adapter<MainResmueRecyclerViewAdapter.MainResumeViewHolder> {
+    private static final String SHARED_IMAGE = "shared_image";
     Context mContext;
     ArrayList<UserProfile> resumes;
 
@@ -46,6 +47,7 @@ public class MainResmueRecyclerViewAdapter extends RecyclerView.Adapter<MainResm
         }else{
             Picasso.get().load(R.drawable.default_profile).into(holder.profileImage);
         }
+        holder.profileImage.setTransitionName(SHARED_IMAGE+position);
     }
 
     @Override
@@ -66,12 +68,12 @@ public class MainResmueRecyclerViewAdapter extends RecyclerView.Adapter<MainResm
         @Override
         public void onClick(View v) {
             int position = getAdapterPosition();
-            mainRecyclerItemClickListener.onResumeItemClickListener(position);
+            mainRecyclerItemClickListener.onResumeItemClickListener(position, profileImage);
         }
     }
 
 
     public interface MainResumeItemClickListener{
-        void onResumeItemClickListener(int position);
+        void onResumeItemClickListener(int position, ImageView imageView);
     }
 }

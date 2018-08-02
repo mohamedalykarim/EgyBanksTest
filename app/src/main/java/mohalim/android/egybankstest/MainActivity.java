@@ -15,6 +15,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -43,6 +44,8 @@ public class MainActivity extends AppCompatActivity
         MainMenuRecyclerAdapter.MainMenuClickListener{
 
     private static final String RESUMES_EXTRA = "extra_resume";
+    private static final String POSITION_EXTRA = "extra_position";
+
     RecyclerView resumeRecycler, mainMenuRecycler;
     LinearLayoutManager resumeLayoutManager, mainMenuLayoutManager;
     MainResmueRecyclerViewAdapter mainResmueRecyclerViewAdapter;
@@ -295,11 +298,17 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void onResumeItemClickListener(int position) {
+    public void onResumeItemClickListener(int position, ImageView profileImageView) {
         Intent intent = new Intent(MainActivity.this,ResumeActivity.class);
         UserProfile resume = resumes.get(position);
-        intent.putExtra(RESUMES_EXTRA, resume);
-        startActivity(intent);
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(RESUMES_EXTRA,resume);
+        intent.putExtra(RESUMES_EXTRA, bundle);
+        intent.putExtra(POSITION_EXTRA, position);
+        Bundle transitionBundle = ActivityOptions.makeSceneTransitionAnimation(
+                this,profileImageView,profileImageView.getTransitionName()
+        ).toBundle();
+        startActivity(intent,transitionBundle);
     }
 
 
