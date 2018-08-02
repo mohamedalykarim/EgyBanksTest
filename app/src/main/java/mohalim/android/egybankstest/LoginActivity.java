@@ -106,7 +106,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         progressBar.setVisibility(View.GONE);
 
                         if (task.isSuccessful()){
-                            finish();
+                            finishAfterTransition();
                         }else{
                             Toast.makeText(LoginActivity.this, "Error: Please Type the Correct Credential",
                                     Toast.LENGTH_SHORT).show();

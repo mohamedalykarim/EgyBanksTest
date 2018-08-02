@@ -211,7 +211,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                                         public void onComplete(@NonNull Task<Void> task) {
                                             //add user profile to database
                                             if (task.isSuccessful()){
-                                                finish();
+                                                finishAfterTransition();
                                             }else {
                                                 Toast.makeText(SignUpActivity.this, ""+task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                                                 signUpProgressBar.setVisibility(View.GONE);
