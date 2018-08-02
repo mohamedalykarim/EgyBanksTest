@@ -18,7 +18,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
-            android:src="@drawable/default_profile"/>
+            android:src="@drawable/default_profile"
+            android:contentDescription="@string/background_profile" />
 
         <View
             android:id="@+id/transparent"
@@ -102,7 +103,8 @@
                         <ImageView
                             android:layout_width="30dp"
                             android:layout_height="30dp"
-                            android:src="@drawable/about_me_icon" />
+                            android:src="@drawable/about_me_icon"
+                            android:contentDescription="@string/about_me" />
 
                         <TextView
                             android:id="@+id/aboutme_title_tv"
@@ -120,7 +122,9 @@
                     <FrameLayout
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:paddingStart="5dp">
+                        android:paddingStart="5dp"
+                        android:paddingEnd="5dp"
+                        >
 
 
                         <View
@@ -139,6 +143,7 @@
                     android:layout_height="wrap_content"
 
                     android:paddingStart="38dp"
+                    android:paddingEnd="1dp"
                     android:textColor="@color/body_text_color" />
 
 
@@ -168,7 +173,8 @@
                         <ImageView
                             android:layout_width="30dp"
                             android:layout_height="30dp"
-                            android:src="@drawable/education_icon" />
+                            android:src="@drawable/education_icon"
+                            android:contentDescription="@string/education" />
 
                         <TextView
                             android:id="@+id/education_title_tv"
@@ -186,7 +192,8 @@
                     <FrameLayout
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:paddingStart="5dp">
+                        android:paddingStart="5dp"
+                        android:paddingEnd="5dp">
 
 
                         <View
@@ -205,6 +212,7 @@
                     android:layout_height="wrap_content"
 
                     android:paddingStart="38dp"
+                    android:paddingEnd="1dp"
                     android:textColor="@color/body_text_color" />
 
 
@@ -234,7 +242,8 @@
                         <ImageView
                             android:layout_width="30dp"
                             android:layout_height="30dp"
-                            android:src="@drawable/experience_icon" />
+                            android:src="@drawable/experience_icon"
+                            android:contentDescription="@string/experience" />
 
                         <TextView
                             android:id="@+id/experience_title_tv"
@@ -252,7 +261,8 @@
                     <FrameLayout
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:paddingStart="5dp">
+                        android:paddingStart="5dp"
+                        android:paddingEnd="5dp">
 
 
                         <View
@@ -271,6 +281,7 @@
                     android:layout_height="wrap_content"
 
                     android:paddingStart="38dp"
+                    android:paddingEnd="1dp"
                     android:textColor="@color/body_text_color" />
 
 
@@ -299,7 +310,8 @@
                         <ImageView
                             android:layout_width="30dp"
                             android:layout_height="30dp"
-                            android:src="@drawable/certification_icon" />
+                            android:src="@drawable/certification_icon"
+                            android:contentDescription="@string/certifications" />
 
                         <TextView
                             android:id="@+id/certifications_title_tv"
@@ -317,7 +329,8 @@
                     <FrameLayout
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:paddingStart="5dp">
+                        android:paddingStart="5dp"
+                        android:paddingEnd="5dp">
 
 
                         <View
@@ -336,6 +349,7 @@
                     android:layout_height="wrap_content"
 
                     android:paddingStart="38dp"
+                    android:paddingEnd="1dp"
                     android:textColor="@color/body_text_color" />
 
 
@@ -365,7 +379,8 @@
                         <ImageView
                             android:layout_width="30dp"
                             android:layout_height="30dp"
-                            android:src="@drawable/courses_icon" />
+                            android:src="@drawable/courses_icon"
+                            android:contentDescription="@string/courses" />
 
                         <TextView
                             android:id="@+id/courses_title_tv"
@@ -383,7 +398,8 @@
                     <FrameLayout
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:paddingStart="5dp">
+                        android:paddingStart="5dp"
+                        android:paddingEnd="5dp">
 
 
                         <View
@@ -402,6 +418,7 @@
                     android:layout_height="wrap_content"
 
                     android:paddingStart="38dp"
+                    android:paddingEnd="1dp"
                     android:textColor="@color/body_text_color" />
 
 
@@ -431,7 +448,8 @@
                         <ImageView
                             android:layout_width="30dp"
                             android:layout_height="30dp"
-                            android:src="@drawable/skills_icon" />
+                            android:src="@drawable/skills_icon"
+                            android:contentDescription="@string/skills" />
 
                         <TextView
                             android:id="@+id/skills_title_tv"
@@ -449,7 +467,8 @@
                     <FrameLayout
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:paddingStart="5dp">
+                        android:paddingStart="5dp"
+                        android:paddingEnd="5dp">
 
 
                         <View
@@ -468,6 +487,7 @@
                     android:layout_height="wrap_content"
 
                     android:paddingStart="38dp"
+                    android:paddingEnd="1dp"
                     android:textColor="@color/body_text_color" />
 
 
@@ -496,7 +516,8 @@
                         <ImageView
                             android:layout_width="30dp"
                             android:layout_height="30dp"
-                            android:src="@drawable/more_info_icon" />
+                            android:src="@drawable/more_info_icon"
+                            android:contentDescription="@string/more_info" />
 
                         <TextView
                             android:id="@+id/more_info_title_tv"
@@ -514,7 +535,8 @@
                     <FrameLayout
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:paddingStart="5dp">
+                        android:paddingStart="5dp"
+                        android:paddingEnd="5dp">
 
 
                         <View
@@ -533,6 +555,7 @@
                     android:layout_height="wrap_content"
 
                     android:paddingStart="38dp"
+                    android:paddingEnd="1dp"
                     android:textColor="@color/body_text_color" />
 
 

@@ -60,7 +60,8 @@
                 android:scaleType="centerCrop"
                 android:padding="10dp"
                 android:layout_gravity="center_horizontal"
-                android:src="@drawable/career"/>
+                android:src="@drawable/career"
+                android:contentDescription="@string/quiz_icon" />
 
 
         </FrameLayout>

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/colorPrimary"
@@ -41,7 +40,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/login_menu" />
+            app:srcCompat="@drawable/login_menu"
+            android:contentDescription="@string/log_in" />
 
         <View
             android:layout_width="match_parent"
@@ -87,7 +87,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/signup" />
+            app:srcCompat="@drawable/signup"
+            android:contentDescription="@string/sign_up" />
 
         <View
             android:layout_width="match_parent"
@@ -133,7 +134,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/log_out_menu" />
+            app:srcCompat="@drawable/log_out_menu"
+            android:contentDescription="@string/log_out" />
 
         <View
             android:layout_width="match_parent"

@@ -56,4 +56,9 @@
     <string name="add_widget">Add widget</string>
     <string name="your_result_is">Your Result is:</string>
     <string name="modify_your_profile_have_one">Hello, You can\'t modify your profile until you have one :)\n Click here to sign up </string>
+    <string name="user_profile">User Profile</string>
+    <string name="background_profile">Background_Profile</string>
+    <string name="menu_icon">Menu Icon</string>
+    <string name="username">Username</string>
+    <string name="quiz_icon">Quiz Icon</string>
 </resources>
