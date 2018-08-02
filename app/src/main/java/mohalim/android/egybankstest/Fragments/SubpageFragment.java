@@ -89,34 +89,34 @@ public class SubpageFragment extends Fragment implements MainMenuRecyclerAdapter
                 Intent intent = new Intent(getContext(), QuizActivity.class);
                 intent.putExtra(SELECTED_QUIZ, IQ_ALAHLY);
 
-                startActivity(intent,ActivityOptions.makeSceneTransitionAnimation(getActivity()).toBundle());
+                startActivity(intent);
                 
             }else if (position == 1){
                 Intent intent = new Intent(getContext(), QuizActivity.class);
                 intent.putExtra(SELECTED_QUIZ, ENGLISH_ALAHLY);
-                startActivity(intent,ActivityOptions.makeSceneTransitionAnimation(getActivity()).toBundle());
+                startActivity(intent);
                 
             }else if (position == 2){
                 Intent intent = new Intent(getContext(), QuizActivity.class);
                 intent.putExtra(SELECTED_QUIZ, TECHNICAL_ALAHLY);
-                startActivity(intent,ActivityOptions.makeSceneTransitionAnimation(getActivity()).toBundle());
+                startActivity(intent);
             }
 
         }else if (menuName.equals(BANQUEMISR_MENU)){
             if (position == 0){
                 Intent intent = new Intent(getContext(), QuizActivity.class);
                 intent.putExtra(SELECTED_QUIZ, IQ_BANQUEMISR);
-                startActivity(intent,ActivityOptions.makeSceneTransitionAnimation(getActivity()).toBundle());
+                startActivity(intent);
 
             }else if (position == 1){
                 Intent intent = new Intent(getContext(), QuizActivity.class);
                 intent.putExtra(SELECTED_QUIZ, ENGLISH_BANQUEMISR);
-                startActivity(intent,ActivityOptions.makeSceneTransitionAnimation(getActivity()).toBundle());
+                startActivity(intent);
 
             }else if (position == 2){
                 Intent intent = new Intent(getContext(), QuizActivity.class);
                 intent.putExtra(SELECTED_QUIZ, TECHNICAL_BANQUEMISR);
-                startActivity(intent,ActivityOptions.makeSceneTransitionAnimation(getActivity()).toBundle());
+                startActivity(intent);
             }
         }
 
