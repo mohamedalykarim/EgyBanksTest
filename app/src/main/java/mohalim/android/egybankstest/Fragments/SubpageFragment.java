@@ -1,5 +1,6 @@
 package mohalim.android.egybankstest.Fragments;
 
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -87,34 +88,35 @@ public class SubpageFragment extends Fragment implements MainMenuRecyclerAdapter
             if (position == 0){
                 Intent intent = new Intent(getContext(), QuizActivity.class);
                 intent.putExtra(SELECTED_QUIZ, IQ_ALAHLY);
-                startActivity(intent);
+
+                startActivity(intent,ActivityOptions.makeSceneTransitionAnimation(getActivity()).toBundle());
                 
             }else if (position == 1){
                 Intent intent = new Intent(getContext(), QuizActivity.class);
                 intent.putExtra(SELECTED_QUIZ, ENGLISH_ALAHLY);
-                startActivity(intent);
+                startActivity(intent,ActivityOptions.makeSceneTransitionAnimation(getActivity()).toBundle());
                 
             }else if (position == 2){
                 Intent intent = new Intent(getContext(), QuizActivity.class);
                 intent.putExtra(SELECTED_QUIZ, TECHNICAL_ALAHLY);
-                startActivity(intent);
+                startActivity(intent,ActivityOptions.makeSceneTransitionAnimation(getActivity()).toBundle());
             }
 
         }else if (menuName.equals(BANQUEMISR_MENU)){
             if (position == 0){
                 Intent intent = new Intent(getContext(), QuizActivity.class);
                 intent.putExtra(SELECTED_QUIZ, IQ_BANQUEMISR);
-                startActivity(intent);
+                startActivity(intent,ActivityOptions.makeSceneTransitionAnimation(getActivity()).toBundle());
 
             }else if (position == 1){
                 Intent intent = new Intent(getContext(), QuizActivity.class);
                 intent.putExtra(SELECTED_QUIZ, ENGLISH_BANQUEMISR);
-                startActivity(intent);
+                startActivity(intent,ActivityOptions.makeSceneTransitionAnimation(getActivity()).toBundle());
 
             }else if (position == 2){
                 Intent intent = new Intent(getContext(), QuizActivity.class);
                 intent.putExtra(SELECTED_QUIZ, TECHNICAL_BANQUEMISR);
-                startActivity(intent);
+                startActivity(intent,ActivityOptions.makeSceneTransitionAnimation(getActivity()).toBundle());
             }
         }
 
