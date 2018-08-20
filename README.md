@@ -1,8 +1,10 @@
 # EgyBanksTest
 
 ScreenShots
-https://github.com/mohamedalykarim/EgyBanksTest/blob/master/Screenshot_20180820-015945.png
-https://github.com/mohamedalykarim/EgyBanksTest/blob/master/Screenshot_20180820-015951.png
-https://github.com/mohamedalykarim/EgyBanksTest/blob/master/Screenshot_20180820-020018.png
-https://github.com/mohamedalykarim/EgyBanksTest/blob/master/Screenshot_20180820-015933.png
+
+![Login screen](/Screenshot_20180820-015945.png?raw=true "Login screen")
+![Login screen](/Screenshot_20180820-015945.png?raw=true "Login screen")
+![Login screen](/Screenshot_20180820-015945.png?raw=true "Login screen")
+![Login screen](/Screenshot_20180820-015933?raw=true "Login screen")
+
 
